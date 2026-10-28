@@ -226,3 +226,21 @@ strong{font-weight:600}
 .lb:not([hidden]) img{animation:zoom .35s cubic-bezier(.2,.7,.2,1)}
 @keyframes zoom{from{opacity:0;transform:scale(.94)}}
 @media(prefers-reduced-motion:reduce){.js .rv,.js .g.main.rv{opacity:1;transform:none;clip-path:none}.js .suite h3.rv::after{width:56px}.gift::before{display:none}}
+
+/* ===== icônes ===== */
+.every li{display:flex;align-items:center;gap:9px;padding-left:0}
+.every li::before{display:none}
+.every .ic{width:20px;height:20px;color:var(--gilt-l)}
+.facts li{display:flex;align-items:center;gap:10px}
+.facts .ic{color:var(--c)}
+.walk span{display:flex;align-items:center;gap:7px;margin-top:4px}
+.walk .ic{width:17px;height:17px;color:var(--gilt)}
+.places li{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto 1fr;column-gap:14px}
+.places li>*:not(.pi){grid-column:2}
+.pi{grid-row:1/-1;align-self:start;width:40px;height:40px;border-radius:999px 999px 6px 6px;display:grid;place-items:center;background:var(--stone);color:var(--gilt)}
+.pi .ic{width:21px;height:21px}
+.btn .ic{width:17px;height:17px}
+.gi{display:inline-grid;place-items:center;width:58px;height:58px;margin-bottom:16px;border-radius:50%;border:1.5px solid color-mix(in srgb,var(--gilt-l) 60%,transparent);color:var(--gilt-l)}
+.gi .ic{width:28px;height:28px;stroke-width:1.4}
+.stars{display:flex;justify-content:center;gap:4px;margin-bottom:10px;color:var(--gilt)}
+.stars .ic{width:18px;height:18px;fill:currentColor;stroke-width:1}

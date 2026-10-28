@@ -23,6 +23,35 @@ def ic(name):
         "tel": '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
         "mail": '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
         "ig": '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".9"/>',
+        "wifi": '<path d="M2 9a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19.5" r=".9"/>',
+        "pot": '<path d="M4 10h16v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4zM2 10h2M20 10h2M9.5 7c0-1 1-1 1-2.5M14 7c0-1 1-1 1-2.5"/>',
+        "cup": '<path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM16 11h1.5a2.5 2.5 0 0 1 0 5H16M8 3.5v3M12 3.5v3"/>',
+        "towel": '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9h16M4 13h16"/>',
+        "bottle": '<path d="M10 3h4v3h-4zM9 6h6l1 3v10a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V9zM8 13h8"/>',
+        "tv": '<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/>',
+        "key": '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/>',
+        "people": '<circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.5A5 5 0 0 1 21 19"/>',
+        "area": '<path d="M4 4h16v16H4zM4 9h3M4 14h3M9 4v3M14 4v3"/>',
+        "bed": '<path d="M3 19V6M21 19v-6a3 3 0 0 0-3-3h-8v6M3 16h18"/><circle cx="6.5" cy="12" r="1.5"/>',
+        "door": '<path d="M6 21V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v17M3 21h18"/><circle cx="14.5" cy="12" r=".9"/>',
+        "lift": '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9.5 9L12 6.5 14.5 9M9.5 15L12 17.5 14.5 15"/>',
+        "stairs": '<path d="M3 20h5v-4h4v-4h4V8h5"/>',
+        "moon": '<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
+        "basket": '<path d="M4 9h16l-1.5 10a2 2 0 0 1-2 1.7h-9a2 2 0 0 1-2-1.7zM8 9l3-5M16 9l-3-5"/>',
+        "gate": '<path d="M4 21V10a8 8 0 0 1 16 0v11M8 21v-9a4 4 0 0 1 8 0v9M2 21h20"/>',
+        "hall": '<path d="M4 21V8l8-4 8 4v13M2 21h20M9 21v-5h6v5M8 11h2M14 11h2"/>',
+        "train": '<rect x="5" y="3" width="14" height="13" rx="3"/><path d="M5 10h14M8 16l-2 5M16 16l2 5"/><circle cx="9" cy="13" r=".8"/><circle cx="15" cy="13" r=".8"/>',
+        "museum": '<path d="M3 9l9-5 9 5M5 9v9M9.5 9v9M14.5 9v9M19 9v9M3 21h18M3 18h18"/>',
+        "palace": '<path d="M3 21V10l3-2 3 2v11M15 21V10l3-2 3 2v11M9 21v-8h6v8M2 21h20M12 13V9"/>',
+        "house": '<path d="M4 21V11l8-7 8 7v10M2 21h20M10 21v-5h4v5"/>',
+        "flower": '<path d="M12 21v-8M12 13c-4 0-6-3-6-6 3 0 6 2 6 6zM12 13c4 0 6-3 6-6-3 0-6 2-6 6zM9 21h6"/>',
+        "fish": '<path d="M3 12c3-5 10-6 15 0-5 6-12 5-15 0zM18 12l3-3v6z"/><circle cx="8" cy="11" r=".8"/>',
+        "anvil": '<path d="M3 7h13a5 5 0 0 1-5 5H9v3h3v3H6v-3h3v-3a6 6 0 0 1-6-5zM16 7h5"/>',
+        "leaf": '<path d="M5 19c0-9 6-14 15-14 0 9-5 15-14 15M5 19l8-8"/>',
+        "tree": '<path d="M12 21v-6M12 15c-4 0-6-2-6-5a6 6 0 0 1 12 0c0 3-2 5-6 5zM8 21h8"/>',
+        "gift": '<rect x="3" y="8" width="18" height="4" rx="1"/><path d="M5 12v9h14v-9M12 8v13M12 8C10 4 7 4 7 6s3 2 5 2zM12 8c2-4 5-4 5-2s-3 2-5 2z"/>',
+        "cal": '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+        "star": '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
         "car": '<path d="M5 17h14M6 17v2M18 17v2M4 13l2-5h12l2 5v4H4z"/><circle cx="8" cy="14.5" r=".8"/><circle cx="16" cy="14.5" r=".8"/>',
     }
     return '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">' + P[name] + "</svg>"
@@ -238,6 +267,13 @@ def flag(k, uid):
             f'<g clip-path="url(#fc{uid}{k})">{FLG[k]}</g></svg>')
 
 SEO = {'fr': ('Location de suites à Nancy, place Stanislas | Les Suites de Catherine', 'Suites meublées au centre de Nancy, à 5 min à pied de la place Stanislas : wifi, cuisine équipée, arrivée autonome. Pour une nuit ou un mois, dès 40,30 €.', 'Une voyageuse lit sur le lit blanc d’une des Suites de Catherine, à Nancy', 'fr_FR', 'Les Suites de Catherine à Nancy, photo {i}'), 'en': ('Suites to rent in Nancy, near Place Stanislas | Les Suites de Catherine', 'Furnished suites in central Nancy, 5 minutes’ walk from Place Stanislas: wifi, equipped kitchen, self check-in. For one night or one month, from €40.30.', 'A guest reading on the white bed of one of Les Suites de Catherine, in Nancy', 'en_GB', 'Les Suites de Catherine in Nancy, photo {i}'), 'de': ('Suiten in Nancy mieten, Place Stanislas | Les Suites de Catherine', 'Möblierte Suiten im Zentrum von Nancy, 5 Gehminuten von der Place Stanislas: WLAN, Küche, Self-Check-in. Für eine Nacht oder einen Monat, ab 40,30 €.', 'Ein Gast liest auf dem weißen Bett einer der Suites de Catherine in Nancy', 'de_DE', 'Les Suites de Catherine in Nancy, Foto {i}'), 'nl': ('Suites huren in Nancy, Place Stanislas | Les Suites de Catherine', 'Gemeubileerde suites in het centrum van Nancy, 5 minuten lopen van de Place Stanislas: wifi, keuken, zelf inchecken. Eén nacht of een maand, vanaf € 40,30.', 'Een gast leest op het witte bed van een van de Suites de Catherine in Nancy', 'nl_NL', 'Les Suites de Catherine in Nancy, foto {i}')}
+EVERY_IC = ["wifi", "pot", "cup", "towel", "bottle", "tv", "key"]
+FACT_IC = {"suite-35": ["people", "area", "bed", "lift"],
+           "suite-si-calme": ["people", "area", "door", "bed", "lift"],
+           "suite-saint-georges": ["people", "area", "bed", "stairs", "moon"]}
+WALK_IC = ["basket", "gate", "hall", "train"]
+PLACE_IC = ["museum", "palace", "house", "flower", "fish", "anvil", "leaf", "tree"]
+
 def page(L):
     t = T[L]
     stitle, sdesc, ogalt, loc, galt = SEO[L]
@@ -282,7 +318,7 @@ def page(L):
         main = f'<button class="g main" type="button" data-full="/img/{s["imgs"][0]}" aria-label="{lab(0)}"><img src="/img/{s["imgs"][0]}" alt="{e(s["name"])}, Nancy" loading="lazy" decoding="async"></button>'
         strip = "".join(f'<li><button class="g" type="button" data-full="/img/{im}" aria-label="{lab(i + 1)}"><img src="/img/{im}" alt="" loading="lazy" decoding="async"></button></li>'
                         for i, im in enumerate(s["imgs"][1:]))
-        facts = "".join(f"<li>{e(f)}</li>" for f in d["facts"])
+        facts = "".join(f"<li>{ic(k)}<span>{e(f)}</span></li>" for f, k in zip(d["facts"], FACT_IC[s["id"]]))
         suites.append(f'''<article class="suite{' rev' if k % 2 else ''}" id="{s["id"]}" style="--c:{s["c"]};--cl:{s["cl"]};--tint:{s["tint"]}">
 <div class="gal">{main}<ul class="strip" aria-label="{e(t["photos"].format(s=s["name"]))}">{strip}</ul></div>
 <div class="tx"><h3>{e(s["name"])}</h3>
@@ -290,15 +326,15 @@ def page(L):
 <ul class="facts">{facts}</ul>
 <p>{rich(d["txt"])}</p>
 <p class="park">{ic("car")}<span>{rich(d["park"])}</span></p>
-<div class="buy"><p class="pr">{e(t["from_"])} <b>{e(s["price"][L])}</b> {e(t["night"])}</p><a class="btn" href="{book}" rel="noopener">{e(t["book"])}</a></div></div>
+<div class="buy"><p class="pr">{e(t["from_"])} <b>{e(s["price"][L])}</b> {e(t["night"])}</p><a class="btn" href="{book}" rel="noopener">{ic("cal")}{e(t["book"])}</a></div></div>
 </article>''')
 
-    every = "".join(f"<li>{e(x)}</li>" for x in t["every_l"])
-    walk = "".join(f"<li><b>{e(a)}</b><span>{e(b)}</span></li>" for a, b in t["walk"])
+    every = "".join(f"<li>{ic(k)}<span>{e(x)}</span></li>" for x, k in zip(t["every_l"], EVERY_IC))
+    walk = "".join(f"<li><b>{e(a)}</b><span>{ic(k)}{e(b)}</span></li>" for (a, b), k in zip(t["walk"], WALK_IC))
     places = ""
-    for nm, url, txt, info in t["places"]:
+    for (nm, url, txt, info), pk in zip(t["places"], PLACE_IC):
         h = f'<a href="{url}" target="_blank" rel="noopener">{e(nm)}{ic("out")}</a>' if url else e(nm)
-        places += f'<li><h4>{h}</h4><p>{e(txt)}</p>' + (f'<p class="info">{e(info)}</p>' if info else "") + "</li>"
+        places += f'<li><span class="pi">{ic(pk)}</span><h4>{h}</h4><p>{e(txt)}</p>' + (f'<p class="info">{e(info)}</p>' if info else "") + "</li>"
 
     return f'''<!doctype html>
 <html lang="{L}">
@@ -333,7 +369,7 @@ def page(L):
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="/style.css?v=10">
+<link rel="stylesheet" href="/style.css?v=11">
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 </head>
 <body>
@@ -354,7 +390,7 @@ def page(L):
 
 <section class="suites" id="suites"><h2 class="vh">{e(t["nav"][0])}</h2><div class="wrap">
 {"".join(suites)}
-<p class="award">{e(t["award"])}</p>
+<p class="award"><span class="stars" aria-hidden="true">{ic("star")}</span>{e(t["award"])}</p>
 </div></section>
 
 <section class="nancy" id="nancy"><div class="wrap">
@@ -366,7 +402,7 @@ def page(L):
 </div></section>
 
 <section class="duo"><div class="wrap">
-<div class="gift" id="offrir"><h2>{e(t["gift_h"])}</h2><p>{rich(t["gift"])}</p><p><a class="btn gold" href="{book}" rel="noopener">{e(t["gift_b"])}</a></p></div>
+<div class="gift" id="offrir"><span class="gi">{ic("gift")}</span><h2>{e(t["gift_h"])}</h2><p>{rich(t["gift"])}</p><p><a class="btn gold" href="{book}" rel="noopener">{ic("gift")}{e(t["gift_b"])}</a></p></div>
 <div class="contact" id="contact"><h2>{e(t["contact_h"])}</h2><p>{rich(t["contact"])}</p>
 <p class="cta"><a class="btn" href="tel:{TEL}">{ic("tel")}{TEL_SHOW}</a><a class="btn ghost" href="mailto:{MAIL}">{ic("mail")}{MAIL}</a></p></div>
 </div></section>
