@@ -1,3 +1,6 @@
+# outils de génération : pas servis
+/outils/*  /fr/  301!
+
 # www -> domaine nu
 https://www.suites2catherine.com/*  https://suites2catherine.com/:splat  301!
 http://www.suites2catherine.com/*   https://suites2catherine.com/:splat  301!
