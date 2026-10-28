@@ -237,14 +237,32 @@ def flag(k, uid):
     return (f'<svg class="flag" viewBox="0 0 60 60" aria-hidden="true"><clipPath id="fc{uid}{k}"><circle cx="30" cy="30" r="30"/></clipPath>'
             f'<g clip-path="url(#fc{uid}{k})">{FLG[k]}</g></svg>')
 
+SEO = {'fr': ('Location de suites à Nancy, place Stanislas | Les Suites de Catherine', 'Suites meublées au centre de Nancy, à 5 min à pied de la place Stanislas : wifi, cuisine équipée, arrivée autonome. Pour une nuit ou un mois, dès 40,30 €.', 'Une voyageuse lit sur le lit blanc d’une des Suites de Catherine, à Nancy', 'fr_FR', 'Les Suites de Catherine à Nancy, photo {i}'), 'en': ('Suites to rent in Nancy, near Place Stanislas | Les Suites de Catherine', 'Furnished suites in central Nancy, 5 minutes’ walk from Place Stanislas: wifi, equipped kitchen, self check-in. For one night or one month, from €40.30.', 'A guest reading on the white bed of one of Les Suites de Catherine, in Nancy', 'en_GB', 'Les Suites de Catherine in Nancy, photo {i}'), 'de': ('Suiten in Nancy mieten, Place Stanislas | Les Suites de Catherine', 'Möblierte Suiten im Zentrum von Nancy, 5 Gehminuten von der Place Stanislas: WLAN, Küche, Self-Check-in. Für eine Nacht oder einen Monat, ab 40,30 €.', 'Ein Gast liest auf dem weißen Bett einer der Suites de Catherine in Nancy', 'de_DE', 'Les Suites de Catherine in Nancy, Foto {i}'), 'nl': ('Suites huren in Nancy, Place Stanislas | Les Suites de Catherine', 'Gemeubileerde suites in het centrum van Nancy, 5 minuten lopen van de Place Stanislas: wifi, keuken, zelf inchecken. Eén nacht of een maand, vanaf € 40,30.', 'Een gast leest op het witte bed van een van de Suites de Catherine in Nancy', 'nl_NL', 'Les Suites de Catherine in Nancy, foto {i}')}
 def page(L):
     t = T[L]
+    stitle, sdesc, ogalt, loc, galt = SEO[L]
     book = f"https://www.les-suites-de-catherine.fr/{L}/booking/room"
     alts = "".join(f'<link rel="alternate" hreflang="{x}" href="{SITE}/{x}/">' for x in LANGS) + f'<link rel="alternate" hreflang="x-default" href="{SITE}/fr/">'
-    ld = {"@context": "https://schema.org", "@type": "LodgingBusiness", "name": "Les Suites de Catherine", "url": f"{SITE}/{L}/",
-          "telephone": TEL_SHOW, "email": MAIL, "image": f"{SITE}/img/suites-03.jpg",
-          "address": {"@type": "PostalAddress", "streetAddress": "35 rue des Carmes", "postalCode": "54000", "addressLocality": "Nancy", "addressCountry": "FR"},
-          "sameAs": [IG, FB]}
+    GEO = {"suite-35": (None, None, 33, 2, 1), "suite-si-calme": (None, None, 55, 3, 2), "suite-saint-georges": (None, None, 35, 2, 1)}  # (-, -, m², personnes, chambres)
+    def num(p): return float(p.replace("€", "").replace(",", ".").replace("\u00a0", "").strip())
+    ld = {"@context": "https://schema.org", "@graph": [
+      {"@type": "LodgingBusiness", "@id": f"{SITE}/#lsdc", "name": "Les Suites de Catherine", "url": f"{SITE}/{L}/",
+       "description": plain(sdesc), "inLanguage": L, "image": [f"{SITE}/img/og.jpg", f"{SITE}/img/suites-03.jpg", f"{SITE}/img/sicalme-lit.jpg"],
+       "telephone": TEL_SHOW, "email": MAIL, "priceRange": "€€",
+       "address": {"@type": "PostalAddress", "streetAddress": "35 rue des Carmes", "postalCode": "54000", "addressLocality": "Nancy", "addressRegion": "Grand Est", "addressCountry": "FR"},
+       "areaServed": "Nancy", "knowsLanguage": ["fr", "en"],
+       "amenityFeature": [{"@type": "LocationFeatureSpecification", "name": plain(x), "value": True} for x in t["every_l"]],
+       "makesOffer": [{"@type": "Offer", "url": book, "priceCurrency": "EUR", "price": num(su["price"]["fr"]), "itemOffered": {"@id": f"{SITE}/{L}/#{su['id']}"}} for su in SUITES],
+       "sameAs": [IG, FB, "https://www.les-suites-de-catherine.fr/"]},
+    ] + [
+      {"@type": "Apartment", "@id": f"{SITE}/{L}/#{su['id']}", "name": su["name"], "url": f"{SITE}/{L}/#{su['id']}",
+       "description": plain(t["s"][su["id"]]["txt"]), "image": [f"{SITE}/img/{x}" for x in su["imgs"]],
+       "containedInPlace": {"@id": f"{SITE}/#lsdc"},
+       "address": {"@type": "PostalAddress", "streetAddress": su["addr"], "postalCode": "54000", "addressLocality": "Nancy", "addressCountry": "FR"},
+       "floorSize": {"@type": "QuantitativeValue", "value": GEO[su["id"]][2], "unitCode": "MTK"},
+       "occupancy": {"@type": "QuantitativeValue", "maxValue": GEO[su["id"]][3]},
+       "numberOfBedrooms": GEO[su["id"]][4]}
+      for su in SUITES]}
     ids = ["suites", "nancy", "offrir", "contact"]
     nav = "".join(f'<a href="#{i}">{e(n)}</a>' for i, n in zip(ids, t["nav"]))
     langs = (f'<details class="lang"><summary aria-label="{e(t["langl"])} : {LNAME[L]}">{flag(L, "c")}</summary><ul>'
@@ -253,7 +271,7 @@ def page(L):
     brand = f'<a class="brand" href="#top" aria-label="Les Suites de Catherine">{MARK}<span>Les Suites<br>de Catherine</span></a>'
 
     arches = "".join(
-        f'<li style="--c:{s["c"]};--cl:{s["cl"]};--i:{k}"><a href="#{s["id"]}"><span class="arch"><img src="/img/{s["hero"]}" alt="" '
+        f'<li style="--c:{s["c"]};--cl:{s["cl"]};--i:{k}"><a href="#{s["id"]}"><span class="arch"><img src="/img/{s["hero"]}" alt="{e(s["name"])}, Nancy" '
         f'{"fetchpriority=\"high\"" if k == 0 else "loading=\"eager\""} decoding="async"></span><span class="nm">{e(s["short"])}</span></a></li>'
         for k, s in enumerate(SUITES))
 
@@ -261,7 +279,7 @@ def page(L):
     for k, s in enumerate(SUITES):
         d = t["s"][s["id"]]; n = len(s["imgs"])
         lab = lambda i: e(t["photo"].format(i=i + 1, n=n, s=s["name"]))
-        main = f'<button class="g main" type="button" data-full="/img/{s["imgs"][0]}" aria-label="{lab(0)}"><img src="/img/{s["imgs"][0]}" alt="" loading="lazy" decoding="async"></button>'
+        main = f'<button class="g main" type="button" data-full="/img/{s["imgs"][0]}" aria-label="{lab(0)}"><img src="/img/{s["imgs"][0]}" alt="{e(s["name"])}, Nancy" loading="lazy" decoding="async"></button>'
         strip = "".join(f'<li><button class="g" type="button" data-full="/img/{im}" aria-label="{lab(i + 1)}"><img src="/img/{im}" alt="" loading="lazy" decoding="async"></button></li>'
                         for i, im in enumerate(s["imgs"][1:]))
         facts = "".join(f"<li>{e(f)}</li>" for f in d["facts"])
@@ -287,22 +305,35 @@ def page(L):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{e(t["title"])}</title>
-<meta name="description" content="{e(t["desc"])}">
+<title>{e(stitle)}</title>
+<meta name="description" content="{e(sdesc)}">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="{SITE}/{L}/">
 {alts}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Les Suites de Catherine">
-<meta property="og:title" content="{e(t["title"])}">
-<meta property="og:description" content="{e(t["desc"])}">
+<meta property="og:title" content="{e(stitle)}">
+<meta property="og:description" content="{e(sdesc)}">
 <meta property="og:url" content="{SITE}/{L}/">
-<meta property="og:image" content="{SITE}/img/suites-03.jpg">
+<meta property="og:locale" content="{loc}">
+{"".join(f'<meta property="og:locale:alternate" content="{SEO[x][3]}">' for x in LANGS if x != L)}
+<meta property="og:image" content="{SITE}/img/og.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{e(ogalt)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{e(stitle)}">
+<meta name="twitter:description" content="{e(sdesc)}">
+<meta name="twitter:image" content="{SITE}/img/og.jpg">
+<meta name="twitter:image:alt" content="{e(ogalt)}">
+<meta name="geo.region" content="FR-54"><meta name="geo.placename" content="Nancy">
 <meta name="theme-color" content="#13221C">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="/style.css?v=9">
+<link rel="stylesheet" href="/style.css?v=10">
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 </head>
 <body>
@@ -346,7 +377,7 @@ def page(L):
 <p class="small">{e(t["foot"])} <a href="https://www.les-suites-de-catherine.fr/{L}" rel="noopener">les-suites-de-catherine.fr</a><br>Photos © Les Suites de Catherine</p>
 </div></footer>
 <div class="lb" id="lb" hidden><button class="x" type="button" aria-label="{e(t["close"])}">×</button><button class="p" type="button" aria-label="{e(t["prev"])}">‹</button><img alt=""><button class="n" type="button" aria-label="{e(t["next"])}">›</button></div>
-<script src="/app.js?v=9" defer></script>
+<script src="/app.js?v=10" defer></script>
 </body>
 </html>
 '''
