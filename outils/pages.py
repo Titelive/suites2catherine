@@ -24,13 +24,13 @@ def ic(name):
     return '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">' + P[name] + "</svg>"
 
 SUITES = [
-    dict(id="suite-35", name="La Suite 35", short="Suite 35", c="#C0698A", hero="suites-03.jpg",
+    dict(id="suite-35", name="La Suite 35", short="Suite 35", c="#B4577A", cl="#E49AB2", tint="#F7E6EC", hero="suites-03.jpg",
          addr="35 rue des Carmes", q="35+rue+des+Carmes+Nancy", price={"fr": "53,95 €", "en": "€53.95", "de": "53,95 €", "nl": "€ 53,95"},
          imgs=["suites-06.jpg", "suites-03.jpg", "suites-07.jpg", "suites-01.jpg", "suites-09.jpg", "suites-02.jpg", "suites-10.jpg", "suites-05.jpg", "suites-04.jpg"]),
-    dict(id="suite-si-calme", name="La Suite Si Calme", short="Si Calme", c="#5E9E7F", hero="sicalme-fauteuil.jpg",
+    dict(id="suite-si-calme", name="La Suite Si Calme", short="Si Calme", c="#3F8466", cl="#8CC7A9", tint="#E1F0E7", hero="sicalme-fauteuil.jpg",
          addr="3 rue Guerrier de Dumast", q="3+rue+Guerrier+de+Dumast+Nancy", price={"fr": "65 €", "en": "€65", "de": "65 €", "nl": "€ 65"},
          imgs=["sicalme-lit.jpg", "sicalme-fauteuil.jpg", "sicalme-fleurs.jpg", "sicalme-radio.jpg", "parking-sicalme.jpg"]),
-    dict(id="suite-saint-georges", name="La Suite Saint Georges", short="Saint Georges", c="#7F8BD6", hero="stgeorges-ampoule.jpg",
+    dict(id="suite-saint-georges", name="La Suite Saint Georges", short="Saint Georges", c="#4F5DB8", cl="#98A3E6", tint="#E4E7F8", hero="stgeorges-ampoule.jpg",
          addr="66 rue Saint Georges", q="66+rue+Saint+Georges+Nancy", price={"fr": "40,30 €", "en": "€40.30", "de": "40,30 €", "nl": "€ 40,30"},
          imgs=["stgeorges-lit.jpg", "stgeorges-table.jpg", "stgeorges-ampoule.jpg"]),
 ]
@@ -236,7 +236,7 @@ def page(L):
     brand = f'<a class="brand" href="#top" aria-label="Les Suites de Catherine">{MARK}<span>Les Suites<br>de Catherine</span></a>'
 
     arches = "".join(
-        f'<li style="--c:{s["c"]};--i:{k}"><a href="#{s["id"]}"><span class="arch"><img src="/img/{s["hero"]}" alt="" '
+        f'<li style="--c:{s["c"]};--cl:{s["cl"]};--i:{k}"><a href="#{s["id"]}"><span class="arch"><img src="/img/{s["hero"]}" alt="" '
         f'{"fetchpriority=\"high\"" if k == 0 else "loading=\"eager\""} decoding="async"></span><span class="nm">{e(s["short"])}</span></a></li>'
         for k, s in enumerate(SUITES))
 
@@ -248,7 +248,7 @@ def page(L):
         strip = "".join(f'<li><button class="g" type="button" data-full="/img/{im}" aria-label="{lab(i + 1)}"><img src="/img/{im}" alt="" loading="lazy" decoding="async"></button></li>'
                         for i, im in enumerate(s["imgs"][1:]))
         facts = "".join(f"<li>{e(f)}</li>" for f in d["facts"])
-        suites.append(f'''<article class="suite{' rev' if k % 2 else ''}" id="{s["id"]}" style="--c:{s["c"]}">
+        suites.append(f'''<article class="suite{' rev' if k % 2 else ''}" id="{s["id"]}" style="--c:{s["c"]};--cl:{s["cl"]};--tint:{s["tint"]}">
 <div class="gal">{main}<ul class="strip" aria-label="{e(t["photos"].format(s=s["name"]))}">{strip}</ul></div>
 <div class="tx"><h3>{e(s["name"])}</h3>
 <p class="addr"><a href="https://www.google.com/maps/search/?api=1&amp;query={s["q"]}" target="_blank" rel="noopener">{ic("pin")}{e(s["addr"])}, Nancy</a></p>
@@ -285,7 +285,7 @@ def page(L):
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="/style.css?v=6">
+<link rel="stylesheet" href="/style.css?v=7">
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 </head>
 <body>
