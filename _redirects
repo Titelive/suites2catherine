@@ -1,0 +1,21 @@
+# www -> domaine nu
+https://www.suites2catherine.com/*  https://suites2catherine.com/:splat  301!
+http://www.suites2catherine.com/*   https://suites2catherine.com/:splat  301!
+
+# Livret d'accueil caché : il reste hébergé sur titelive.me (fonctions + données
+# Netlify Blobs), on le sert ici en proxy pour garder l'adresse suites2catherine.com
+/voyageurs/livret    https://titelive.me/voyageurs/livret/        200!
+/voyageurs/livret/*  https://titelive.me/voyageurs/livret/:splat  200!
+/livret/*            https://titelive.me/livret/:splat            200!
+
+# Une seule page par langue
+/fr/:page  /fr/  301!
+/en/:page  /en/  301!
+/de/:page  /de/  301!
+/nl/:page  /nl/  301!
+
+# Accueil : redirection directe selon la langue du navigateur
+/  /en/  302!  Language=en
+/  /de/  302!  Language=de
+/  /nl/  302!  Language=nl
+/  /fr/  302!

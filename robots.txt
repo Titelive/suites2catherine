@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /voyageurs/
+Allow: /
+
+Sitemap: https://suites2catherine.com/sitemap.xml
