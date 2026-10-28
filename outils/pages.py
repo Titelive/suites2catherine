@@ -373,7 +373,7 @@ def page(L):
 </main>
 <footer class="foot"><div class="wrap">
 {brand}
-<p><a class="ig" href="{IG}" target="_blank" rel="noopener">{ic("ig")}@les_suites_de_catherine</a></p>
+<p><a class="ig" href="{IG}" target="_blank" rel="noopener">{ic("ig")}les_suites_de_catherine</a></p>
 <p class="small">{e(t["foot"])} <a href="https://www.les-suites-de-catherine.fr/{L}" rel="noopener">les-suites-de-catherine.fr</a><br>Photos © Les Suites de Catherine</p>
 </div></footer>
 <div class="lb" id="lb" hidden><button class="x" type="button" aria-label="{e(t["close"])}">×</button><button class="p" type="button" aria-label="{e(t["prev"])}">‹</button><img alt=""><button class="n" type="button" aria-label="{e(t["next"])}">›</button></div>
