@@ -9,6 +9,10 @@ TEL, TEL_SHOW, MAIL = "+33662068640", "+33 6 62 06 86 40", "lsdc54000@gmail.com"
 IG = "https://www.instagram.com/les_suites_de_catherine/"
 FB = "https://www.facebook.com/les.suites.de.catherine"
 e = html.escape
+import re
+def rich(x):
+    return re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", html.escape(x))
+plain = lambda x: x.replace("**", "")
 
 MARK = open(os.path.join(os.path.dirname(__file__), "marque.svg")).read().strip()
 
@@ -42,7 +46,7 @@ T = {
     skip="Aller au contenu", menu="Menu", langl="Langue",
     nav=["Les suites", "Nancy", "Offrir", "Contact"], book="Réserver",
     h1="Trois suites au cœur de Nancy",
-    lead="À quelques minutes à pied de la place Stanislas, pour une nuit ou pour un mois.",
+    lead="À quelques minutes à pied de la **place Stanislas**, pour **une nuit ou pour un mois**.",
     from_="dès", night="la nuit",
     every="Dans chaque suite",
     every_l=["Wifi rapide", "Cuisine équipée", "Nespresso", "Linge de lit et de toilette", "Produits de bain", "Télévision", "Arrivée autonome ou accueil par Catherine"],
@@ -50,19 +54,19 @@ T = {
     photo="Photo {i} sur {n}, {s}", photos="Photos de {s}",
     s={
      "suite-35": dict(facts=["2 personnes", "33 m²", "Lit queen", "3e étage, ascenseur"],
-        txt="En plein centre : la place Stanislas, le marché central et la gare se font à pied. Un salon au mobilier chiné, une cuisine complète.",
-        park="Parkings Dom Calmet et Charles III tout proches, avec bornes de recharge."),
+        txt="En plein centre : la **place Stanislas**, le **marché central** et la **gare** se font à pied. Un **salon au mobilier chiné**, une **cuisine complète**.",
+        park="Parkings Dom Calmet et Charles III tout proches, avec **bornes de recharge**."),
      "suite-si-calme": dict(facts=["3 personnes", "55 m²", "2 chambres", "Lit queen et lit simple", "4e étage, ascenseur"],
-        txt="Plein ouest, côté jardin : le calme en centre-ville. Séjour avec cuisine ouverte, lave-linge, lave-vaisselle, salle de bains et WC séparés.",
-        park="Place de parking sécurisée en option."),
+        txt="**Plein ouest, côté jardin** : le **calme** en centre-ville. Séjour avec **cuisine ouverte**, lave-linge, lave-vaisselle, **salle de bains et WC séparés**.",
+        park="**Place de parking sécurisée** en option."),
      "suite-saint-georges": dict(facts=["2 personnes", "35 m²", "Lit double", "2e étage, escalier en colimaçon", "2 nuits minimum"],
-        txt="Des murs en pierre, près de la place Stanislas et de la cathédrale. Un vrai salon, un bureau pour télétravailler et un lave-linge.",
-        park="Parking Stanislas, rue Maurice Barrès."),
+        txt="Des **murs en pierre**, près de la **place Stanislas** et de la **cathédrale**. Un **vrai salon**, un **bureau pour télétravailler** et un lave-linge.",
+        park="**Parking Stanislas**, rue Maurice Barrès."),
     },
     nancy="Nancy à pied", walk_cap="Depuis la Suite 35",
     walk=[("2 min", "Marché central"), ("5 min", "Place Stanislas"), ("5 min", "Centre Prouvé"), ("10 min", "Gare")],
     stan_h="La place Stanislas",
-    stan="Achevée en 1755, classée à l’UNESCO depuis 1983. Les grilles dorées de Jean Lamour, des terrasses et, les soirs d’été, le son et lumière « Rendez-vous ».",
+    stan="Achevée en 1755, classée à l’**UNESCO** depuis 1983. Les **grilles dorées de Jean Lamour**, des terrasses et, les soirs d’été, le son et lumière « **Rendez-vous** ».",
     see="À voir aussi",
     places=[
      ("Musée des Beaux-Arts", "https://musee-des-beaux-arts.nancy.fr/accueil-145.html", "Du Pérugin à Delacroix, la collection Daum et Jean Prouvé.", "Fermé le mardi"),
@@ -76,10 +80,10 @@ T = {
     ],
     tourism="Office de tourisme",
     gift_h="Offrir un séjour",
-    gift="Une carte cadeau pour l’une des trois suites, valable 12 mois et envoyée par e-mail dès le paiement.",
+    gift="Une carte cadeau pour l’une des trois suites, **valable 12 mois** et **envoyée par e-mail** dès le paiement.",
     gift_b="Commander une carte cadeau",
     contact_h="Écrire à Catherine",
-    contact="Une question, un accueil sur mesure : elle vous répond.",
+    contact="Une question, un **accueil sur mesure** : elle vous répond.",
     foot="Réservations sur", close="Fermer", prev="Photo précédente", next="Photo suivante",
 ),
 "en": dict(
@@ -88,7 +92,7 @@ T = {
     skip="Skip to content", menu="Menu", langl="Language",
     nav=["The suites", "Nancy", "Gift cards", "Contact"], book="Book",
     h1="Three suites in the heart of Nancy",
-    lead="A few minutes’ walk from Place Stanislas, for one night or one month.",
+    lead="A few minutes’ walk from **Place Stanislas**, for **one night or one month**.",
     from_="from", night="per night",
     every="In every suite",
     every_l=["Fast wifi", "Equipped kitchen", "Nespresso", "Bed linen and towels", "Toiletries", "TV", "Self check-in or a welcome from Catherine"],
@@ -96,19 +100,19 @@ T = {
     photo="Photo {i} of {n}, {s}", photos="Photos of {s}",
     s={
      "suite-35": dict(facts=["2 guests", "33 m²", "Queen bed", "3rd floor, lift"],
-        txt="Right in the centre: Place Stanislas, the covered market and the station are all on foot. A living room with vintage furniture and a full kitchen.",
-        park="Dom Calmet and Charles III car parks nearby, with EV charging."),
+        txt="Right in the centre: **Place Stanislas**, the **covered market** and the **station** are all on foot. A **living room with vintage furniture** and a **full kitchen**.",
+        park="Dom Calmet and Charles III car parks nearby, with **EV charging**."),
      "suite-si-calme": dict(facts=["3 guests", "55 m²", "2 bedrooms", "Queen bed and single bed", "4th floor, lift"],
-        txt="West-facing, over the garden: quiet in the middle of town. Living room with open kitchen, washing machine, dishwasher, bathroom and separate toilet.",
-        park="Secure parking space on request."),
+        txt="**West-facing, over the garden**: **quiet** in the middle of town. Living room with **open kitchen**, washing machine, dishwasher, **bathroom and separate toilet**.",
+        park="**Secure parking space** on request."),
      "suite-saint-georges": dict(facts=["2 guests", "35 m²", "Double bed", "2nd floor, spiral staircase", "2-night minimum"],
-        txt="Exposed stone walls, close to Place Stanislas and the cathedral. A real living room, a desk for remote work and a washing machine.",
-        park="Stanislas car park, rue Maurice Barrès."),
+        txt="**Exposed stone walls**, close to **Place Stanislas** and the **cathedral**. A **real living room**, a **desk for remote work** and a washing machine.",
+        park="**Stanislas car park**, rue Maurice Barrès."),
     },
     nancy="Nancy on foot", walk_cap="From La Suite 35",
     walk=[("2 min", "Covered market"), ("5 min", "Place Stanislas"), ("5 min", "Prouvé centre"), ("10 min", "Station")],
     stan_h="Place Stanislas",
-    stan="Completed in 1755, a UNESCO World Heritage site since 1983. Jean Lamour’s gilded gates, café terraces and, on summer nights, the “Rendez-vous” light show.",
+    stan="Completed in 1755, a **UNESCO** World Heritage site since 1983. **Jean Lamour’s gilded gates**, café terraces and, on summer nights, the “**Rendez-vous**” light show.",
     see="Also worth a visit",
     places=[
      ("Museum of Fine Arts", "https://musee-des-beaux-arts.nancy.fr/accueil-145.html", "From Perugino to Delacroix, the Daum collection and Jean Prouvé.", "Closed Tuesdays"),
@@ -122,10 +126,10 @@ T = {
     ],
     tourism="Tourist office",
     gift_h="Give a stay",
-    gift="A gift card for any of the three suites, valid for 12 months and emailed as soon as it’s paid.",
+    gift="A gift card for any of the three suites, **valid for 12 months** and **emailed** as soon as it’s paid.",
     gift_b="Order a gift card",
     contact_h="Contact Catherine",
-    contact="A question, or a personal welcome? She’ll get back to you.",
+    contact="A question, or a **personal welcome**? She’ll get back to you.",
     foot="Bookings on", close="Close", prev="Previous photo", next="Next photo",
 ),
 "de": dict(
@@ -134,7 +138,7 @@ T = {
     skip="Zum Inhalt", menu="Menü", langl="Sprache",
     nav=["Die Suiten", "Nancy", "Verschenken", "Kontakt"], book="Buchen",
     h1="Drei Suiten im Herzen von Nancy",
-    lead="Wenige Gehminuten von der Place Stanislas, für eine Nacht oder einen Monat.",
+    lead="Wenige Gehminuten von der **Place Stanislas**, für **eine Nacht oder einen Monat**.",
     from_="ab", night="pro Nacht",
     every="In jeder Suite",
     every_l=["Schnelles WLAN", "Ausgestattete Küche", "Nespresso", "Bettwäsche und Handtücher", "Pflegeprodukte", "Fernseher", "Self-Check-in oder Empfang durch Catherine"],
@@ -142,19 +146,19 @@ T = {
     photo="Foto {i} von {n}, {s}", photos="Fotos: {s}",
     s={
      "suite-35": dict(facts=["2 Personen", "33 m²", "Queensize-Bett", "3. Stock, Aufzug"],
-        txt="Mitten im Zentrum: Place Stanislas, Markthalle und Bahnhof erreichen Sie zu Fuß. Ein Wohnzimmer mit Vintage-Möbeln und eine komplette Küche.",
-        park="Parkhäuser Dom Calmet und Charles III in der Nähe, mit Ladestationen."),
+        txt="Mitten im Zentrum: **Place Stanislas**, **Markthalle** und **Bahnhof** erreichen Sie zu Fuß. Ein **Wohnzimmer mit Vintage-Möbeln** und eine **komplette Küche**.",
+        park="Parkhäuser Dom Calmet und Charles III in der Nähe, mit **Ladestationen**."),
      "suite-si-calme": dict(facts=["3 Personen", "55 m²", "2 Schlafzimmer", "Queensize- und Einzelbett", "4. Stock, Aufzug"],
-        txt="Nach Westen, zum Garten hin: Ruhe mitten in der Stadt. Wohnzimmer mit offener Küche, Waschmaschine, Geschirrspüler, Bad und separates WC.",
-        park="Gesicherter Parkplatz auf Anfrage."),
+        txt="**Nach Westen, zum Garten hin**: **Ruhe** mitten in der Stadt. Wohnzimmer mit **offener Küche**, Waschmaschine, Geschirrspüler, **Bad und separates WC**.",
+        park="**Gesicherter Parkplatz** auf Anfrage."),
      "suite-saint-georges": dict(facts=["2 Personen", "35 m²", "Doppelbett", "2. Stock, Wendeltreppe", "Mindestens 2 Nächte"],
-        txt="Wände aus Naturstein, nahe der Place Stanislas und der Kathedrale. Ein echtes Wohnzimmer, ein Schreibtisch fürs Homeoffice und eine Waschmaschine.",
-        park="Parkhaus Stanislas, Rue Maurice Barrès."),
+        txt="**Wände aus Naturstein**, nahe der **Place Stanislas** und der **Kathedrale**. Ein **echtes Wohnzimmer**, ein **Schreibtisch fürs Homeoffice** und eine Waschmaschine.",
+        park="**Parkhaus Stanislas**, Rue Maurice Barrès."),
     },
     nancy="Nancy zu Fuß", walk_cap="Ab La Suite 35",
     walk=[("2 Min.", "Markthalle"), ("5 Min.", "Place Stanislas"), ("5 Min.", "Centre Prouvé"), ("10 Min.", "Bahnhof")],
     stan_h="Die Place Stanislas",
-    stan="1755 vollendet, seit 1983 UNESCO-Welterbe. Die vergoldeten Gitter von Jean Lamour, Caféterrassen und an Sommerabenden die Lichtshow „Rendez-vous“.",
+    stan="1755 vollendet, seit 1983 **UNESCO**-Welterbe. Die **vergoldeten Gitter von Jean Lamour**, Caféterrassen und an Sommerabenden die Lichtshow „**Rendez-vous**“.",
     see="Ebenfalls sehenswert",
     places=[
      ("Musée des Beaux-Arts", "https://musee-des-beaux-arts.nancy.fr/accueil-145.html", "Von Perugino bis Delacroix, die Daum-Sammlung und Jean Prouvé.", "Dienstags geschlossen"),
@@ -168,10 +172,10 @@ T = {
     ],
     tourism="Tourismusbüro",
     gift_h="Einen Aufenthalt verschenken",
-    gift="Ein Gutschein für eine der drei Suiten, 12 Monate gültig und nach der Zahlung per E-Mail verschickt.",
+    gift="Ein Gutschein für eine der drei Suiten, **12 Monate gültig** und nach der Zahlung **per E-Mail** verschickt.",
     gift_b="Gutschein bestellen",
     contact_h="Catherine schreiben",
-    contact="Eine Frage oder ein persönlicher Empfang? Sie antwortet Ihnen.",
+    contact="Eine Frage oder ein **persönlicher Empfang**? Sie antwortet Ihnen.",
     foot="Buchungen auf", close="Schließen", prev="Vorheriges Foto", next="Nächstes Foto",
 ),
 "nl": dict(
@@ -180,7 +184,7 @@ T = {
     skip="Naar de inhoud", menu="Menu", langl="Taal",
     nav=["De suites", "Nancy", "Cadeaubon", "Contact"], book="Boeken",
     h1="Drie suites in het hart van Nancy",
-    lead="Op een paar minuten lopen van de Place Stanislas, voor één nacht of een maand.",
+    lead="Op een paar minuten lopen van de **Place Stanislas**, voor **één nacht of een maand**.",
     from_="vanaf", night="per nacht",
     every="In elke suite",
     every_l=["Snelle wifi", "Ingerichte keuken", "Nespresso", "Bedlinnen en handdoeken", "Verzorgingsproducten", "Televisie", "Zelf inchecken of ontvangst door Catherine"],
@@ -188,19 +192,19 @@ T = {
     photo="Foto {i} van {n}, {s}", photos="Foto’s van {s}",
     s={
      "suite-35": dict(facts=["2 personen", "33 m²", "Queensize bed", "3e verdieping, lift"],
-        txt="Midden in het centrum: Place Stanislas, de markthal en het station liggen op loopafstand. Een woonkamer met vintage meubels en een complete keuken.",
-        park="Parkeergarages Dom Calmet en Charles III vlakbij, met laadpalen."),
+        txt="Midden in het centrum: **Place Stanislas**, de **markthal** en het **station** liggen op loopafstand. Een **woonkamer met vintage meubels** en een **complete keuken**.",
+        park="Parkeergarages Dom Calmet en Charles III vlakbij, met **laadpalen**."),
      "suite-si-calme": dict(facts=["3 personen", "55 m²", "2 slaapkamers", "Queensize en eenpersoonsbed", "4e verdieping, lift"],
-        txt="Op het westen, aan de tuinkant: rust midden in de stad. Woonkamer met open keuken, wasmachine, vaatwasser, badkamer en apart toilet.",
-        park="Beveiligde parkeerplaats op aanvraag."),
+        txt="**Op het westen, aan de tuinkant**: **rust** midden in de stad. Woonkamer met **open keuken**, wasmachine, vaatwasser, **badkamer en apart toilet**.",
+        park="**Beveiligde parkeerplaats** op aanvraag."),
      "suite-saint-georges": dict(facts=["2 personen", "35 m²", "Tweepersoonsbed", "2e verdieping, wenteltrap", "Minimaal 2 nachten"],
-        txt="Muren van natuursteen, vlak bij de Place Stanislas en de kathedraal. Een echte woonkamer, een bureau om thuis te werken en een wasmachine.",
-        park="Parkeergarage Stanislas, rue Maurice Barrès."),
+        txt="**Muren van natuursteen**, vlak bij de **Place Stanislas** en de **kathedraal**. Een **echte woonkamer**, een **bureau om thuis te werken** en een wasmachine.",
+        park="**Parkeergarage Stanislas**, rue Maurice Barrès."),
     },
     nancy="Nancy te voet", walk_cap="Vanaf La Suite 35",
     walk=[("2 min", "Markthal"), ("5 min", "Place Stanislas"), ("5 min", "Centre Prouvé"), ("10 min", "Station")],
     stan_h="De Place Stanislas",
-    stan="Voltooid in 1755, sinds 1983 UNESCO-werelderfgoed. De vergulde hekken van Jean Lamour, terrasjes en op zomeravonden de lichtshow „Rendez-vous”.",
+    stan="Voltooid in 1755, sinds 1983 **UNESCO**-werelderfgoed. De **vergulde hekken van Jean Lamour**, terrasjes en op zomeravonden de lichtshow „**Rendez-vous**”.",
     see="Ook de moeite waard",
     places=[
      ("Musée des Beaux-Arts", "https://musee-des-beaux-arts.nancy.fr/accueil-145.html", "Van Perugino tot Delacroix, de Daum-collectie en Jean Prouvé.", "Dinsdag gesloten"),
@@ -214,13 +218,24 @@ T = {
     ],
     tourism="VVV Nancy",
     gift_h="Een verblijf cadeau doen",
-    gift="Een cadeaubon voor een van de drie suites, 12 maanden geldig en per e-mail verstuurd zodra hij betaald is.",
+    gift="Een cadeaubon voor een van de drie suites, **12 maanden geldig** en **per e-mail** verstuurd zodra hij betaald is.",
     gift_b="Cadeaubon bestellen",
     contact_h="Catherine schrijven",
-    contact="Een vraag, of een persoonlijke ontvangst? Ze antwoordt u.",
+    contact="Een vraag, of een **persoonlijke ontvangst**? Ze antwoordt u.",
     foot="Boekingen op", close="Sluiten", prev="Vorige foto", next="Volgende foto",
 ),
 }
+
+FLG = {
+ "fr": '<rect width="60" height="60" fill="#fff"/><rect width="20" height="60" fill="#2d4fa3"/><rect x="40" width="20" height="60" fill="#d63a3a"/>',
+ "en": '<rect width="60" height="60" fill="#2c3f8f"/><path d="M0 0L60 60M60 0L0 60" stroke="#fff" stroke-width="10"/><path d="M0 0L60 60M60 0L0 60" stroke="#d1303f" stroke-width="3.5"/><path d="M30 0V60M0 30H60" stroke="#fff" stroke-width="16"/><path d="M30 0V60M0 30H60" stroke="#d1303f" stroke-width="9"/>',
+ "de": '<rect width="60" height="20" fill="#2b2b2b"/><rect y="20" width="60" height="20" fill="#d63a3a"/><rect y="40" width="60" height="20" fill="#f6cc4d"/>',
+ "nl": '<rect width="60" height="20" fill="#a52d34"/><rect y="20" width="60" height="20" fill="#f4f4f4"/><rect y="40" width="60" height="20" fill="#2c4fa8"/>',
+}
+LNAME = {"fr": "Français", "en": "English", "de": "Deutsch", "nl": "Nederlands"}
+def flag(k, uid):
+    return (f'<svg class="flag" viewBox="0 0 60 60" aria-hidden="true"><clipPath id="fc{uid}{k}"><circle cx="30" cy="30" r="30"/></clipPath>'
+            f'<g clip-path="url(#fc{uid}{k})">{FLG[k]}</g></svg>')
 
 def page(L):
     t = T[L]
@@ -232,7 +247,9 @@ def page(L):
           "sameAs": [IG, FB]}
     ids = ["suites", "nancy", "offrir", "contact"]
     nav = "".join(f'<a href="#{i}">{e(n)}</a>' for i, n in zip(ids, t["nav"]))
-    langs = "".join(f'<a href="/{x}/" hreflang="{x}" lang="{x}"' + (' aria-current="true"' if x == L else "") + f">{x}</a>" for x in LANGS)
+    langs = (f'<details class="lang"><summary aria-label="{e(t["langl"])} : {LNAME[L]}">{flag(L, "c")}</summary><ul>'
+             + "".join(f'<li><a href="/{x}/" hreflang="{x}" lang="{x}"' + (' aria-current="true"' if x == L else "") + f'>{flag(x, "m")}<span>{LNAME[x]}</span></a></li>' for x in LANGS)
+             + "</ul></details>")
     brand = f'<a class="brand" href="#top" aria-label="Les Suites de Catherine">{MARK}<span>Les Suites<br>de Catherine</span></a>'
 
     arches = "".join(
@@ -253,8 +270,8 @@ def page(L):
 <div class="tx"><h3>{e(s["name"])}</h3>
 <p class="addr"><a href="https://www.google.com/maps/search/?api=1&amp;query={s["q"]}" target="_blank" rel="noopener">{ic("pin")}{e(s["addr"])}, Nancy</a></p>
 <ul class="facts">{facts}</ul>
-<p>{e(d["txt"])}</p>
-<p class="park">{ic("car")}{e(d["park"])}</p>
+<p>{rich(d["txt"])}</p>
+<p class="park">{ic("car")}<span>{rich(d["park"])}</span></p>
 <div class="buy"><p class="pr">{e(t["from_"])} <b>{e(s["price"][L])}</b> {e(t["night"])}</p><a class="btn" href="{book}" rel="noopener">{e(t["book"])}</a></div></div>
 </article>''')
 
@@ -285,7 +302,7 @@ def page(L):
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600&display=swap">
-<link rel="stylesheet" href="/style.css?v=7">
+<link rel="stylesheet" href="/style.css?v=9">
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
 </head>
 <body>
@@ -293,12 +310,12 @@ def page(L):
 <header class="hd" id="hd"><div class="bar">
 {brand}
 <nav class="nav" aria-label="{e(t["menu"])}">{nav}</nav>
-<div class="act"><nav class="lang" aria-label="{e(t["langl"])}">{langs}</nav><a class="btn sm" href="{book}" rel="noopener">{e(t["book"])}</a></div>
+<div class="act">{langs}<a class="btn sm" href="{book}" rel="noopener">{e(t["book"])}</a></div>
 </div></header>
 <main id="main">
 <section class="hero" id="top"><div class="wrap">
 <h1>{e(t["h1"])}</h1>
-<p class="lead">{e(t["lead"])}</p>
+<p class="lead">{rich(t["lead"])}</p>
 <ul class="arches">{arches}</ul>
 </div></section>
 
@@ -312,14 +329,14 @@ def page(L):
 <section class="nancy" id="nancy"><div class="wrap">
 <div class="nt"><h2>{e(t["nancy"])}</h2>
 <ul class="walk" aria-label="{e(t["walk_cap"])}">{walk}</ul><p class="cap">{e(t["walk_cap"])}</p>
-<h3>{e(t["stan_h"])}</h3><p class="stan">{e(t["stan"])}</p></div>
+<h3>{e(t["stan_h"])}</h3><p class="stan">{rich(t["stan"])}</p></div>
 <div class="see"><h3>{e(t["see"])}</h3><ul class="places">{places}</ul>
 <p><a class="link" href="https://www.nancy-tourisme.fr/" target="_blank" rel="noopener">{e(t["tourism"])}{ic("out")}</a></p></div>
 </div></section>
 
 <section class="duo"><div class="wrap">
-<div class="gift" id="offrir"><h2>{e(t["gift_h"])}</h2><p>{e(t["gift"])}</p><p><a class="btn gold" href="{book}" rel="noopener">{e(t["gift_b"])}</a></p></div>
-<div class="contact" id="contact"><h2>{e(t["contact_h"])}</h2><p>{e(t["contact"])}</p>
+<div class="gift" id="offrir"><h2>{e(t["gift_h"])}</h2><p>{rich(t["gift"])}</p><p><a class="btn gold" href="{book}" rel="noopener">{e(t["gift_b"])}</a></p></div>
+<div class="contact" id="contact"><h2>{e(t["contact_h"])}</h2><p>{rich(t["contact"])}</p>
 <p class="cta"><a class="btn" href="tel:{TEL}">{ic("tel")}{TEL_SHOW}</a><a class="btn ghost" href="mailto:{MAIL}">{ic("mail")}{MAIL}</a></p></div>
 </div></section>
 </main>
@@ -329,7 +346,7 @@ def page(L):
 <p class="small">{e(t["foot"])} <a href="https://www.les-suites-de-catherine.fr/{L}" rel="noopener">les-suites-de-catherine.fr</a><br>Photos © Les Suites de Catherine</p>
 </div></footer>
 <div class="lb" id="lb" hidden><button class="x" type="button" aria-label="{e(t["close"])}">×</button><button class="p" type="button" aria-label="{e(t["prev"])}">‹</button><img alt=""><button class="n" type="button" aria-label="{e(t["next"])}">›</button></div>
-<script src="/app.js?v=6" defer></script>
+<script src="/app.js?v=9" defer></script>
 </body>
 </html>
 '''

@@ -43,9 +43,17 @@ h4{font-size:24px;line-height:1.1}
 .nav{display:flex;gap:28px;margin-inline:auto;font-weight:500;font-size:15px}
 .nav a{text-decoration:none;opacity:.8;transition:opacity .2s}.nav a:hover{opacity:1}
 .act{display:flex;align-items:center;gap:14px;margin-left:auto}
-.lang{display:flex;gap:2px;font:500 14px/1 var(--sans)}
-.lang a{padding:7px;text-decoration:none;opacity:.55}
-.lang a:hover{opacity:1}.lang a[aria-current]{opacity:1;box-shadow:inset 0 -2px 0 var(--gilt-l)}
+/* langue : un drapeau rond, comme dans le livret d'accueil */
+.lang{position:relative}
+.lang summary{list-style:none;cursor:pointer;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;box-shadow:0 0 0 1.5px currentColor;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+.lang summary::-webkit-details-marker{display:none}
+.lang summary:hover{transform:rotate(-8deg) scale(1.08)}
+.lang .flag{width:30px;height:30px;display:block}
+.lang ul{position:absolute;right:0;top:calc(100% + 10px);min-width:200px;padding:8px;background:var(--paper);color:var(--ink);border-radius:14px;box-shadow:0 18px 40px -18px rgba(10,20,15,.5),0 0 0 1px var(--line);transform-origin:top right;animation:pop .2s cubic-bezier(.2,.7,.2,1)}
+@keyframes pop{from{opacity:0;transform:scale(.92)}}
+.lang li a{display:flex;align-items:center;gap:12px;padding:9px 10px;border-radius:9px;text-decoration:none;font-weight:600;font-size:15px}
+.lang li a:hover{background:var(--stone)}
+.lang li a[aria-current]{box-shadow:inset 0 0 0 1.5px var(--ink)}
 .hd:not(.solid) .btn{background:var(--gilt-l);color:var(--night);border-color:var(--gilt-l)}
 .hd:not(.solid) .btn:hover{background:var(--ivory);border-color:var(--ivory)}
 
@@ -56,7 +64,8 @@ h4{font-size:24px;line-height:1.1}
 .arches{grid-column:1/-1}
 .lead{font-size:clamp(17px,1.5vw,20px);max-width:30ch;margin:24px 0 .4em;color:color-mix(in srgb,var(--ivory) 82%,transparent)}
 .arches{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,2.4vw,32px);margin-top:clamp(44px,7vh,80px);align-items:end}
-.arches li:nth-child(2){transform:translateY(-36px)}
+.arches li{transform:translateY(var(--py,0px))}
+.arches li:nth-child(2){transform:translateY(calc(-36px + var(--py,0px)))}
 .arches a{display:block;text-decoration:none;color:var(--ivory)}
 .arch{display:block;aspect-ratio:3/4.1;border-radius:999px 999px 0 0;overflow:hidden;box-shadow:inset 0 0 0 1px var(--line-d);position:relative}
 .arch img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
@@ -163,7 +172,7 @@ h4{font-size:24px;line-height:1.1}
 }
 @media(max-width:620px){
   .brand span{display:none}.mark{width:52px}
-  .bar{gap:10px}.act{gap:6px}.lang a{padding:7px 5px}
+  .bar{gap:10px}.act{gap:10px}
   .arches{grid-template-columns:repeat(3,72%);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:-16px;padding-inline:16px;gap:14px}
   .arches::-webkit-scrollbar{display:none}
   .arches li{scroll-snap-align:center}.arches li:nth-child(2){transform:none}
@@ -173,3 +182,47 @@ h4{font-size:24px;line-height:1.1}
   .small{text-align:left}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}.mark path{stroke-dashoffset:0}}
+
+strong{font-weight:600}
+.hero strong,.every strong{color:var(--ivory)}
+.lead strong{color:var(--ivory);font-weight:600}
+
+/* ===== animations ===== */
+/* titre et chapô : entrée au chargement */
+@keyframes up{from{opacity:0;transform:translateY(28px)}}
+.hero h1{animation:up 1s cubic-bezier(.2,.7,.2,1) both}
+.lead{animation:up 1s .25s cubic-bezier(.2,.7,.2,1) both}
+.nm{animation:up .8s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(.75s + var(--i) * .14s)}
+/* arches de l'accueil : se soulèvent au survol */
+.arches a{transition:transform .5s cubic-bezier(.3,1.4,.5,1)}
+.arches a:hover{transform:translateY(-10px)}
+.arches a:hover .nm::before{transform:scale(1.6)}
+.nm::before{transition:transform .3s}
+/* apparitions au défilement */
+.js .rv{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.js .rv.in{opacity:1;transform:none}
+/* grande photo : s'ouvre de bas en haut, comme les arches */
+.js .g.main.rv{opacity:1;transform:none;clip-path:inset(100% -14px -14px -14px);transition:clip-path 1.3s cubic-bezier(.65,0,.2,1)}
+.js .g.main.rv.in{clip-path:inset(-14px -14px -14px -14px)}
+.js .g.main.rv img{transform:scale(1.18);transition:transform 1.8s cubic-bezier(.2,.7,.2,1)}
+.js .g.main.rv.in img{transform:none}
+.js .g.main.rv.in:hover img{transform:scale(1.04)}
+/* nom de la suite : le filet de couleur se trace */
+.js .suite h3.rv::after{width:0;transition:width .9s .45s cubic-bezier(.2,.7,.2,1)}
+.js .suite h3.rv.in::after{width:56px}
+.js .suite h3.rv{transform:translateX(-24px)}.js .suite h3.rv.in{transform:none}
+/* boutons : petit élan */
+.btn{transition:background .25s,color .25s,border-color .25s,transform .3s cubic-bezier(.3,1.6,.5,1),box-shadow .3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px -12px rgba(10,20,15,.55)}
+.btn:active{transform:translateY(0) scale(.97)}
+/* vignettes : soulèvement */
+.strip .g{transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+.strip .g:hover{transform:translateY(-5px)}
+/* carte cadeau : un reflet d'or passe lentement */
+.gift{position:relative;overflow:hidden;isolation:isolate}
+.gift::before{content:"";position:absolute;inset:-40%;z-index:-1;background:conic-gradient(from 0deg,transparent 0 70%,color-mix(in srgb,var(--gilt-l) 22%,transparent) 80%,transparent 90%);animation:spin 9s linear infinite}
+@keyframes spin{to{transform:rotate(1turn)}}
+/* visionneuse */
+.lb:not([hidden]) img{animation:zoom .35s cubic-bezier(.2,.7,.2,1)}
+@keyframes zoom{from{opacity:0;transform:scale(.94)}}
+@media(prefers-reduced-motion:reduce){.js .rv,.js .g.main.rv{opacity:1;transform:none;clip-path:none}.js .suite h3.rv::after{width:56px}.gift::before{display:none}}
