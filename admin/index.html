@@ -162,6 +162,39 @@ legend{font:800 16px/1 var(--sans);padding:0 8px}
   section.sec{padding:18px 14px;border-radius:16px}
   .card{padding:0 12px}
 }
+
+/* ===== aperçu en direct du livret (téléphone à droite du formulaire) ===== */
+.page.wpv{max-width:1600px;grid-template-columns:220px minmax(0,1fr) 392px}
+.pv{position:sticky;top:14px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.pv[hidden]{display:none}
+.pvh{width:100%;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.pvh b{font:800 15px/1.2 var(--sans);margin-right:auto;display:flex;align-items:center;gap:8px}
+.pvh b i{width:8px;height:8px;border-radius:50%;background:#2fa36b;box-shadow:0 0 0 4px rgba(47,163,107,.16);animation:pvlive 1.8s ease-in-out infinite}
+@keyframes pvlive{50%{box-shadow:0 0 0 7px rgba(47,163,107,.04)}}
+.pvh button{width:30px;height:30px;padding:0;border-radius:50%;border:1px solid var(--line2);background:#fff;display:grid;place-items:center;overflow:hidden;cursor:pointer}
+.pvh button svg{width:100%;height:100%;display:block}
+.pvh button[aria-pressed=true]{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--brand)}
+#pvl{display:flex;gap:6px}
+.pvh .pvx{display:none;color:var(--ink);height:30px;width:auto;padding:0 12px;border-radius:999px;font-weight:700;font-size:14px}
+.phone{position:relative;width:392px;height:min(820px,calc(100vh - 250px));border-radius:46px;border:11px solid #1d1d1f;background:#fff;box-shadow:0 30px 60px -30px rgba(0,0,0,.45),0 0 0 1px #3a3a3c;overflow:hidden}
+.phone::before{content:"";position:absolute;top:8px;left:50%;width:96px;height:26px;margin-left:-48px;border-radius:20px;background:#1d1d1f;z-index:3;pointer-events:none}
+.phone::after{content:"";position:absolute;inset:0 0 auto;height:40px;background:#fff;z-index:2;pointer-events:none}
+.phone iframe{position:absolute;inset:40px 0 0;width:100%;height:calc(100% - 40px);border:0;background:#fff;transition:opacity .18s}
+.phone iframe.wait{opacity:0;pointer-events:none}
+.pvn{font-size:12.5px;color:var(--mute);text-align:center;max-width:340px;line-height:1.45;margin:0}
+.pvbusy{position:absolute;right:14px;bottom:14px;z-index:4;font:700 11px/1 var(--sans);color:#fff;background:rgba(0,0,0,.55);padding:6px 9px;border-radius:999px;opacity:0;transition:opacity .2s}
+.pvbusy.on{opacity:1}
+#pvbtn{display:none}
+@media(max-width:1240px){
+  .page.wpv{grid-template-columns:220px minmax(0,1fr);max-width:1280px}
+  .pv{position:fixed;inset:0;z-index:65;background:rgba(20,20,22,.6);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:14px;justify-content:center;display:none}
+  .pv.open{display:flex}
+  .pvh{max-width:392px;color:#fff}.pvh .pvx{display:inline-grid}
+  .pvn{color:rgba(255,255,255,.8)}
+  .phone{height:min(800px,calc(100vh - 120px))}
+  #pvbtn.on{display:inline-flex}
+}
+@media(max-width:860px){.page.wpv{grid-template-columns:1fr}.phone{width:min(392px,100%);border-width:8px;border-radius:38px}}
 </style>
 </head>
 <body>
@@ -199,10 +232,16 @@ legend{font:800 16px/1 var(--sans);padding:0 8px}
     <button class="reset" type="button" id="reset">Revenir à la version d'origine</button>
   </aside>
   <main id="form"><div class="loading">Chargement…</div></main>
+  <div class="pv" id="pv" hidden>
+    <div class="pvh"><b><i></i>Aperçu en direct</b><span id="pvl"></span><button type="button" class="pvx" id="pvx">Fermer</button></div>
+    <div class="phone" id="phone"><span class="pvbusy" id="pvbusy">Mise à jour…</span></div>
+    <p class="pvn">Ce que voient vos voyageurs, mis à jour pendant que vous écrivez. Rien n'est publié avant <b>Enregistrer et publier</b>.</p>
+  </div>
 </div>
 <div class="save"><div class="in">
   <div class="msg" id="msg"><i></i><span>À jour</span></div>
   <button class="btn ghost" type="button" id="prev">Aperçu</button>
+  <button class="btn ghost" type="button" id="pvbtn">Aperçu du livret</button>
   <button class="btn ghost" type="button" id="undo" disabled>Annuler les modifications</button>
   <button class="btn" type="button" id="save" disabled>Enregistrer et publier</button>
 </div></div>
@@ -264,14 +303,14 @@ $("tabs").addEventListener("click",function(e){var b=e.target.closest("[data-doc
 
 function openDoc(d){state.doc=d;var rs=document.documentElement.style;if(d.livret){rs.setProperty("--brand",d.c);rs.setProperty("--brand2","color-mix(in srgb,"+d.c+" 72%,#000)")}else{rs.removeProperty("--brand");rs.removeProperty("--brand2")}$("form").innerHTML='<div class="loading">Chargement…</div>';
   [].forEach.call($("tabs").children,function(b){b.setAttribute("aria-selected",b.dataset.doc===d.id)});
-  $("prev").hidden=!d.preview;$("hist").hidden=!d.hist;
+  $("prev").hidden=!d.preview;$("hist").hidden=!d.hist;pvSetup(d);
   api(d.api,d.read).then(function(j){state.data=j.contenu;state.orig=j.original;state.modifie=!!j.modifie;if(j.icones)state.icons=j.icones;state.saved=JSON.stringify(j.contenu);render();status()}).catch(function(e){$("form").innerHTML='<div class="loading">'+esc(e.message)+"</div>"})}
 
 function dirty(){return state.data&&JSON.stringify(state.data)!==state.saved}
 function status(msg,kind){var m=$("msg");m.className="msg"+(kind?" "+kind:dirty()?" dirty":"");
   m.querySelector("span").textContent=msg||(dirty()?"Modifications non enregistrées":"À jour, en ligne");
   $("save").disabled=!dirty();$("undo").disabled=!dirty();
-  $("sstate").textContent=state.modifie?"Version modifiée par vous":"Version d'origine";}
+  $("sstate").textContent=state.modifie?"Version modifiée par vous":"Version d'origine";pvSchedule()}
 window.addEventListener("beforeunload",function(e){if(dirty()){e.preventDefault();e.returnValue=""}});
 
 /* ===== rendu du formulaire ===== */
@@ -289,7 +328,7 @@ var ICONPATHS={};
 function render(){
   var d=state.doc,c=state.data,F=$("form");F.innerHTML="";var nav=$("snav");nav.innerHTML="";
   $("stitle").innerHTML='<i style="--c:'+d.c+'"></i>'+esc(d.nom);
-  $("shelp").innerHTML=d.livret?"Pour mettre un mot en <b>gras</b>, entourez-le de <b>**</b>. Une ligne qui commence par <b>-</b> devient une puce. <b>{tel}</b> est remplacé par votre numéro.<br><br>Le livret modifié s'affiche dès l'enregistrement : ouvrez un de vos liens voyageurs pour le vérifier.":"Pour mettre un mot en <b>gras</b>, entourez-le de <b>**</b>.<br><br>Cliquez sur <b>Aperçu</b> pour voir la page avant de publier.";
+  $("shelp").innerHTML=d.livret?"Pour mettre un mot en <b>gras</b>, entourez-le de <b>**</b>. Une ligne qui commence par <b>-</b> devient une puce. <b>{tel}</b> est remplacé par votre numéro.<br><br>L'<b>aperçu en direct</b> montre le livret tel que vos voyageurs le verront ; il suit la partie que vous modifiez.":"Pour mettre un mot en <b>gras</b>, entourez-le de <b>**</b>.<br><br>Cliquez sur <b>Aperçu</b> pour voir la page avant de publier.";
   var secs=d.livret?LIV_SECTIONS.map(function(s){return[s[0],s[1]]}):SITE_SECTIONS.map(function(s){return[s[1],[s[0]]]});
   secs.forEach(function(s,i){var keys=s[1].filter(function(k){return k in c});if(!keys.length)return;
     var sec=el("section","sec");sec.id="s"+i;sec.appendChild(el("h3","",esc(s[0])));
@@ -305,6 +344,48 @@ function spy(){var as=[].slice.call($("snav").children);as.forEach(function(a){a
 window.addEventListener("scroll",function(){var as=[].slice.call($("snav").children),cur=null;as.forEach(function(a){var s=document.querySelector(a.getAttribute("href"));if(s&&s.getBoundingClientRect().top<140)cur=a});as.forEach(function(a){a.classList.toggle("on",a===(cur||as[0]))})},{passive:true});
 
 function changed(){status()}
+
+/* ===== aperçu en direct du livret =====
+   Le gabarit du livret est chargé une fois, puis rempli avec le contenu en cours de modification (rien n'est enregistré).
+   Deux cadres se relaient pour que la mise à jour se fasse sans clignoter, en gardant la page et la position de lecture. */
+var PV={tpl:null,lang:"fr",view:"home",timer:0,last:"",seq:0};
+var PV_VIEW={"Général":"home","Photos d'accueil":"home","Wifi":"wifi","Arrivée":"sec:checkin","Codes d'accès":"sec:checkin","Numéros utiles":"nums","Infos pratiques":"infos","Départ":"depart","Autour de la suite":"adresse"};
+function pvOn(){return state.doc&&state.doc.livret}
+function pvSetup(d){var on=!!d.livret;$("pv").hidden=!on;document.querySelector(".page").classList.toggle("wpv",on);$("pvbtn").classList.toggle("on",on);
+  if(!on){$("pv").classList.remove("open");return}
+  $("pvl").innerHTML=["fr","en","de","nl"].map(function(l){return '<button type="button" data-pvl="'+l+'" title="'+LNAME[l]+'" aria-pressed="'+(l===PV.lang)+'">'+flag(l)+"</button>"}).join("");
+  PV.last="";PV.view="home";try{sessionStorage.setItem("livret.view","home")}catch(e){}}
+function pvTpl(){if(PV.tpl)return Promise.resolve(PV.tpl);
+  return fetch("/voyageurs/livret/",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("Aperçu indisponible");return r.text()}).then(function(t){PV.tpl=t;return t})}
+function pvSchedule(){if(!pvOn()||!state.data)return;clearTimeout(PV.timer);PV.timer=setTimeout(pvRender,450)}
+function pvData(){var c=JSON.parse(JSON.stringify(state.data)),d=new Date(),f=function(x){return x.toISOString().slice(0,10)};
+  c.suites=[{id:state.doc.id,nom:c.nom||state.doc.nom}];c.guest="Julie";c.lang=PV.lang;
+  var a=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));c.stay={from:f(a),to:f(new Date(a.getTime()+2*864e5))};return c}
+function pvRender(force){if(!pvOn())return;var data=pvData(),key=JSON.stringify(data)+"|"+PV.view;if(!force&&key===PV.last)return;PV.last=key;var my=++PV.seq;
+  $("pvbusy").classList.add("on");
+  pvTpl().then(function(t){if(my!==PV.seq)return;
+    var safe=JSON.stringify(data).replace(/</g,"\\u003c").split("\u2028").join("\\u2028").split("\u2029").join("\\u2029");
+    var pre='<base href="/voyageurs/livret/"><script>window.__LV='+safe+';window.__LVPREVIEW=1;try{localStorage.removeItem("livret.lang");sessionStorage.setItem("livret.view",'+JSON.stringify(PV.view)+')}catch(e){}<\/script>'+
+      '<style>*,*::before,*::after{animation-duration:0s!important;animation-delay:0s!important;transition-duration:0s!important}html{scrollbar-width:none}::-webkit-scrollbar{display:none}<\/style>';
+    var html=t.indexOf('<script>window.__LVERR="missing"<\/script>')>=0?t.replace('<script>window.__LVERR="missing"<\/script>',pre):t.replace("</head>",pre+"</head>");
+    var ph=$("phone"),old=ph.querySelector("iframe:not(.wait)"),y=0;try{y=old?old.contentWindow.scrollY:0}catch(e){}
+    [].forEach.call(ph.querySelectorAll("iframe.wait"),function(x){x.remove()});
+    var fr=document.createElement("iframe");fr.className="wait";fr.title="Aperçu du livret";fr.setAttribute("tabindex","-1");
+    fr.onload=function(){setTimeout(function(){if(my!==PV.seq&&fr.parentNode){fr.remove();return}try{fr.contentWindow.scrollTo(0,y)}catch(e){}
+      fr.classList.remove("wait");if(old&&old!==fr)setTimeout(function(){old.remove()},200);$("pvbusy").classList.remove("on")},120)};
+    ph.appendChild(fr);fr.srcdoc=html}).catch(function(e){$("pvbusy").textContent=e.message})}
+/* la page du livret suit la partie du formulaire où l'on travaille */
+function pvGo(v){if(!pvOn()||!v||v===PV.view)return;PV.view=v;try{sessionStorage.setItem("livret.view",v)}catch(e){}
+  var fr=$("phone").querySelector("iframe:not(.wait)");if(fr&&fr.contentWindow){try{fr.contentWindow.postMessage({lvView:v},"*");fr.contentWindow.scrollTo(0,0)}catch(e){}}
+  PV.last=""}
+function pvSecOf(n){var s=n&&n.closest&&n.closest("section.sec");if(!s)return null;var h=s.querySelector("h3");return h?PV_VIEW[h.textContent]:null}
+$("form").addEventListener("focusin",function(e){var v=pvSecOf(e.target);if(v)pvGo(v)});
+$("snav").addEventListener("click",function(e){var a=e.target.closest("a");if(!a)return;var v=PV_VIEW[a.textContent];if(v)pvGo(v)});
+$("pvl").addEventListener("click",function(e){var b=e.target.closest("[data-pvl]");if(!b)return;PV.lang=b.dataset.pvl;[].forEach.call($("pvl").children,function(x){x.setAttribute("aria-pressed",x===b)});pvRender(true)});
+$("pvbtn").addEventListener("click",function(){$("pv").classList.add("open");pvRender(true)});
+$("pvx").addEventListener("click",function(){$("pv").classList.remove("open")});
+$("pv").addEventListener("click",function(e){if(e.target===$("pv"))$("pv").classList.remove("open")});
+
 
 /* un champ, d'après sa valeur */
 function field(obj,key,path,flat){
