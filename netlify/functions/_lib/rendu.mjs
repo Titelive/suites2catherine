@@ -2,8 +2,9 @@
 // enregistrée par Catherine dans l'espace d'édition). Utilisé par la fonction « page » et par outils/rendu.mjs.
 export const SITE = "https://suites2catherine.com";
 export const LANGS = ["fr", "en", "de", "nl"];
-export const VERSION = "12";
+export const VERSION = "20";
 export const ICONS = {
+"grid": "<rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\" rx=\"1.5\"/>",
 "pin": "<path d=\"M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z\"/><circle cx=\"12\" cy=\"9.5\" r=\"2.5\"/>",
 "out": "<path d=\"M7 17L17 7M9 7h8v8\"/>",
 "tel": "<path d=\"M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z\"/>",
@@ -71,8 +72,9 @@ export function renderPage(C, L, opts = {}) {
   const stitle = tr(seo.titre, L), sdesc = plain(tr(seo.description, L)), ogalt = tr(seo.imageAlt, L);
   const ogimg = abs(seo.image || "/img/og.jpg");
   const resa = (safeUrl((C.liens || {}).reservation) || "https://www.les-suites-de-catherine.fr").replace(/\/+$/, "");
+  const resaHost = resa.replace(/^https?:\/\/(www\.)?/, "");
   const book = `${resa}/${L}/booking/room`;
-  const tel = (C.contact || {}).telephone || "", mail = (C.contact || {}).email || "";
+  const K = C.contact || {}, tel = K.telephone || "", mail = K.email || "";
   const IG = safeUrl((C.liens || {}).instagram), FB = safeUrl((C.liens || {}).facebook);
   const alts = LANGS.map((x) => `<link rel="alternate" hreflang="${x}" href="${SITE}/${x}/">`).join("") + `<link rel="alternate" hreflang="x-default" href="${SITE}/fr/">`;
   const first = S[0] || {};
@@ -97,39 +99,50 @@ export function renderPage(C, L, opts = {}) {
   const langs = `<details class="lang"><summary aria-label="${e(tr(I.langue, L))} : ${LNAME[L]}">${flag(L, "c")}</summary><ul>` +
     LANGS.map((x) => `<li><a href="/${x}/" hreflang="${x}" lang="${x}"` + (x === L ? ' aria-current="true"' : "") + `>${flag(x, "m")}<span>${LNAME[x]}</span></a></li>`).join("") + "</ul></details>";
   const brand = `<a class="brand" href="#top" aria-label="Les Suites de Catherine">${MARK}<span>Les Suites<br>de Catherine</span></a>`;
-  const vars = (s) => `--c:${color(s.couleur, "#1C3029")};--cl:${color(s.couleurClaire, "#D8B86E")}`;
+  const vars = (s) => `--c:${color(s.couleur, "#3F6B5A")};--cl:${color(s.couleurClaire, "#9CC3B2")};--tint:${color(s.couleurFond, "#EEF3F0")}`;
+  const note = tr(C.note, L);
+  const star = '<svg class="st" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9z"/></svg>';
+  const dot = " · ";
 
-  const arches = S.map((s, k) => `<li style="${vars(s)};--i:${k}"><a href="#${e(s.ancre)}"><span class="arch"><img src="${e(s.photoAccueil || (s.photos || [])[0] || "")}" alt="${e(s.nom)}, Nancy" ` +
-    (k === 0 ? 'fetchpriority="high"' : 'loading="eager"') + ` decoding="async"></span><span class="nm">${e(s.nomCourt || s.nom)}</span></a></li>`).join("");
+  /* cartes des suites, façon résultats de recherche */
+  const cards = S.map((s, k) => {
+    const f = (s.caracteristiques || []).slice(0, 2).map((x) => e(tr(x.texte, L))).join(dot);
+    return `<li style="${vars(s)};--i:${k}"><a href="#${e(s.ancre)}"><span class="cph"><img src="${e(s.photoAccueil || (s.photos || [])[0] || "")}" alt="${e(s.nom)}, Nancy" ${k === 0 ? 'fetchpriority="high"' : 'loading="eager"'} decoding="async"><span class="tag"><i></i>${e(s.nomCourt || s.nom)}</span></span>` +
+      `<span class="cn">${e(s.nom)}</span><span class="cf">${f}</span><span class="cp">${e(tr(I.des, L))} <b>${e(tr(s.prix, L))}</b> ${e(tr(I.parNuit, L))}</span></a></li>`;
+  }).join("");
 
   const suites = S.map((s, k) => {
     const ph = (s.photos || []).filter(Boolean), n = ph.length;
     const lab = (i) => e(fmt(tr(I.photoN, L), { i: i + 1, n, s: s.nom }));
-    const main = ph.length ? `<button class="g main" type="button" data-full="${e(ph[0])}" aria-label="${lab(0)}"><img src="${e(ph[0])}" alt="${e(s.nom)}, Nancy" loading="lazy" decoding="async"></button>` : "";
-    const strip = ph.slice(1).map((im, i) => `<li><button class="g" type="button" data-full="${e(im)}" aria-label="${lab(i + 1)}"><img src="${e(im)}" alt="" loading="lazy" decoding="async"></button></li>`).join("");
+    const gal = ph.map((im, i) => `<button class="g${i === 0 ? " main" : ""}${i > 4 ? " more" : ""}" type="button" data-full="${e(im)}" aria-label="${lab(i)}"><img src="${e(im)}" alt="${i === 0 ? e(s.nom) + ", Nancy" : ""}" loading="lazy" decoding="async"></button>`).join("");
+    const all = n > 1 ? `<button class="all" type="button" data-all>${ic("grid")}${e(fmt(tr(I.afficherPhotos, L), { n }))}</button>` : "";
     const facts = (s.caracteristiques || []).map((f) => `<li>${ic(f.icone)}<span>${e(tr(f.texte, L))}</span></li>`).join("");
     const q = encodeURIComponent((s.adresse || "") + " Nancy").replace(/%20/g, "+");
     const park = tr(s.parking, L);
-    return `<article class="suite${k % 2 ? " rev" : ""}" id="${e(s.ancre)}" style="${vars(s)};--tint:${color(s.couleurFond, "#E5E8DF")}">
-<div class="gal">${main}<ul class="strip" aria-label="${e(fmt(tr(I.photosDe, L), { s: s.nom }))}">${strip}</ul></div>
-<div class="tx"><h3>${e(s.nom)}</h3>
-<p class="addr"><a href="https://www.google.com/maps/search/?api=1&amp;query=${q}" target="_blank" rel="noopener">${ic("pin")}${e(s.adresse)}, Nancy</a></p>
+    return `<article class="suite" id="${e(s.ancre)}" style="${vars(s)}"><div class="wrap">
+<header class="sh"><h2><i></i>${e(s.nom)}</h2><a class="addr" href="https://www.google.com/maps/search/?api=1&amp;query=${q}" target="_blank" rel="noopener">${ic("pin")}${e(s.adresse)}, Nancy</a></header>
+<div class="gal n${Math.min(n, 5)}" aria-label="${e(fmt(tr(I.photosDe, L), { s: s.nom }))}">${gal}${all}</div>
+<div class="sb"><div class="sx">
 <ul class="facts">${facts}</ul>
-<p>${rich(tr(s.texte, L))}</p>
-${park ? `<p class="park">${ic("car")}<span>${rich(park)}</span></p>\n` : ""}<div class="buy"><p class="pr">${e(tr(I.des, L))} <b>${e(tr(s.prix, L))}</b> ${e(tr(I.parNuit, L))}</p><a class="btn" href="${e(book)}" rel="noopener">${ic("cal")}${e(tr(I.reserver, L))}</a></div></div>
-</article>`;
+<p class="tx">${rich(tr(s.texte, L))}</p>
+${park ? `<p class="park">${ic("car")}<span>${rich(park)}</span></p>` : ""}
+</div>
+<aside class="book"><p class="pr"><span>${e(tr(I.des, L))}</span> <b>${e(tr(s.prix, L))}</b> <span>${e(tr(I.parNuit, L))}</span></p>
+<a class="btn grad" href="${e(book)}" rel="noopener">${ic("cal")}${e(tr(I.reserver, L))}</a>
+<p class="sm">${e(tr(I.reservationEnLigne, L))} ${e(resaHost)}</p></aside>
+</div></div></article>`;
   }).join("");
 
-  const EQ = C.equipements || {}, N = C.nancy || {}, G = C.cadeau || {}, K = C.contact || {};
+  const EQ = C.equipements || {}, N = C.nancy || {}, G = C.cadeau || {};
   const every = (EQ.liste || []).map((x) => `<li>${ic(x.icone)}<span>${e(tr(x.texte, L))}</span></li>`).join("");
-  const walk = (N.trajets || []).map((x) => `<li><b>${e(tr(x.duree, L))}</b><span>${ic(x.icone)}${e(tr(x.lieu, L))}</span></li>`).join("");
+  const walk = (N.trajets || []).map((x) => `<li>${ic(x.icone)}<b>${e(tr(x.duree, L))}</b><span>${e(tr(x.lieu, L))}</span></li>`).join("");
   const places = (N.lieux || []).map((p) => {
     const u = safeUrl(p.lien), nm = tr(p.nom, L), info = tr(p.info, L);
     const h = u ? `<a href="${e(u)}" target="_blank" rel="noopener">${e(nm)}${ic("out")}</a>` : e(nm);
-    return `<li><span class="pi">${ic(p.icone)}</span><h4>${h}</h4><p>${e(tr(p.texte, L))}</p>` + (info ? `<p class="info">${e(info)}</p>` : "") + "</li>";
+    return `<li><span class="pi">${ic(p.icone)}</span><div><h4>${h}</h4><p>${e(tr(p.texte, L))}</p>` + (info ? `<p class="info">${e(info)}</p>` : "") + "</div></li>";
   }).join("");
-  const note = tr(C.note, L);
   const tourism = safeUrl(N.lienOfficeTourisme);
+  const mins = S.map((s) => ({ v: num(tr(s.prix, "fr")), t: tr(s.prix, L) })).filter((x) => x.v != null).sort((a, b) => a.v - b.v)[0];
 
   return `<!doctype html>
 <html lang="${L}">
@@ -159,11 +172,11 @@ ${LANGS.filter((x) => x !== L).map((x) => `<meta property="og:locale:alternate" 
 <meta name="twitter:image" content="${e(ogimg)}">
 <meta name="twitter:image:alt" content="${e(ogalt)}">
 <meta name="geo.region" content="FR-54"><meta name="geo.placename" content="Nancy">
-<meta name="theme-color" content="#13221C">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&family=Instrument+Serif:ital@1&display=swap">
 <link rel="stylesheet" href="/style.css?v=${VERSION}">
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>
 </head>
@@ -172,42 +185,44 @@ ${LANGS.filter((x) => x !== L).map((x) => `<meta property="og:locale:alternate" 
 <header class="hd" id="hd"><div class="bar">
 ${brand}
 <nav class="nav" aria-label="${e(tr(I.nomDuMenu, L))}">${nav}</nav>
-<div class="act">${langs}<a class="btn sm" href="${e(book)}" rel="noopener">${e(tr(I.reserver, L))}</a></div>
+<div class="act">${langs}<a class="btn sm grad" href="${e(book)}" rel="noopener">${e(tr(I.reserver, L))}</a></div>
 </div></header>
 <main id="main">
 <section class="hero" id="top"><div class="wrap">
 <h1>${e(tr((C.accueil || {}).titre, L))}</h1>
-<p class="lead">${rich(tr((C.accueil || {}).chapo, L))}</p>
-<ul class="arches">${arches}</ul>
+<p class="sub">${rich(tr((C.accueil || {}).chapo, L))}</p>
+${note ? `<p class="rate">${star}<span>${e(note)}</span></p>` : ""}
+<ul class="cards" id="suites">${cards}</ul>
 </div></section>
 
-<section class="every"><div class="wrap"><h2>${e(tr(EQ.titre, L))}</h2><ul>${every}</ul></div></section>
+<section class="every"><div class="wrap"><h2>${e(tr(EQ.titre, L))}</h2><ul class="amen">${every}</ul></div></section>
 
-<section class="suites" id="suites"><h2 class="vh">${e(tr(M.suites, L))}</h2><div class="wrap">
+<h2 class="vh">${e(tr(M.suites, L))}</h2>
 ${suites}
-${note ? `<p class="award"><span class="stars" aria-hidden="true">${ic("star")}</span>${e(note)}</p>` : ""}
-</div></section>
 
 <section class="nancy" id="nancy"><div class="wrap">
-<div class="nt"><h2>${e(tr(N.titre, L))}</h2>
+<h2>${e(tr(N.titre, L))}</h2>
+<div class="nn"><div class="nt">
 <ul class="walk" aria-label="${e(tr(N.depuis, L))}">${walk}</ul><p class="cap">${e(tr(N.depuis, L))}</p>
-<h3>${e(tr(N.stanislasTitre, L))}</h3><p class="stan">${rich(tr(N.stanislas, L))}</p></div>
+<div class="stan"><h3>${e(tr(N.stanislasTitre, L))}</h3><p>${rich(tr(N.stanislas, L))}</p></div></div>
 <div class="see"><h3>${e(tr(N.aVoirTitre, L))}</h3><ul class="places">${places}</ul>
-${tourism ? `<p><a class="link" href="${e(tourism)}" target="_blank" rel="noopener">${e(tr(N.officeTourisme, L))}${ic("out")}</a></p>` : ""}</div>
+${tourism ? `<p><a class="link" href="${e(tourism)}" target="_blank" rel="noopener">${e(tr(N.officeTourisme, L))}${ic("out")}</a></p>` : ""}</div></div>
 </div></section>
 
 <section class="duo"><div class="wrap">
-<div class="gift" id="offrir"><span class="gi">${ic("gift")}</span><h2>${e(tr(G.titre, L))}</h2><p>${rich(tr(G.texte, L))}</p><p><a class="btn gold" href="${e(book)}" rel="noopener">${ic("gift")}${e(tr(G.bouton, L))}</a></p></div>
-<div class="contact" id="contact"><h2>${e(tr(K.titre, L))}</h2><p>${rich(tr(K.texte, L))}</p>
+<div class="host" id="contact"><div class="hc">${K.photo ? `<img class="av" src="${e(K.photo)}" alt="${e(K.nom || "")}" loading="lazy" decoding="async">` : ""}<div><h2>${e(tr(K.titre, L))}</h2><p class="role">${e(tr(K.role, L))}</p></div></div>
+<p>${rich(tr(K.texte, L))}</p>
 <p class="cta">${tel ? `<a class="btn" href="tel:${e(telHref(tel))}">${ic("tel")}${e(tel)}</a>` : ""}${mail ? `<a class="btn ghost" href="mailto:${e(mail)}">${ic("mail")}${e(mail)}</a>` : ""}</p></div>
+<div class="gift" id="offrir"><span class="gi">${ic("gift")}</span><h2>${e(tr(G.titre, L))}</h2><p>${rich(tr(G.texte, L))}</p><p><a class="btn ghost" href="${e(book)}" rel="noopener">${ic("gift")}${e(tr(G.bouton, L))}</a></p></div>
 </div></section>
 </main>
 <footer class="foot"><div class="wrap">
 ${brand}
 ${IG ? `<p><a class="ig" href="${e(IG)}" target="_blank" rel="noopener">${ic("ig")}${e((C.liens || {}).nomInstagram || "Instagram")}</a></p>` : ""}
-<p class="small">${e(tr(I.reservationsSur, L))} <a href="${e(resa)}/${L}" rel="noopener">${e(resa.replace(/^https?:\/\/(www\.)?/, ""))}</a><br>Photos © Les Suites de Catherine</p>
+<p class="small">${e(tr(I.reservationsSur, L))} <a href="${e(resa)}/${L}" rel="noopener">${e(resaHost)}</a><br>Photos © Les Suites de Catherine</p>
 </div></footer>
-<div class="lb" id="lb" hidden><button class="x" type="button" aria-label="${e(tr(I.fermer, L))}">×</button><button class="p" type="button" aria-label="${e(tr(I.photoPrecedente, L))}">‹</button><img alt=""><button class="n" type="button" aria-label="${e(tr(I.photoSuivante, L))}">›</button></div>
+${mins ? `<div class="mbar"><p><span>${e(tr(I.des, L))}</span> <b>${e(mins.t)}</b> <span>${e(tr(I.parNuit, L))}</span></p><a class="btn grad" href="${e(book)}" rel="noopener">${e(tr(I.reserver, L))}</a></div>` : ""}
+<div class="lb" id="lb" hidden><button class="x" type="button" aria-label="${e(tr(I.fermer, L))}">×</button><button class="p" type="button" aria-label="${e(tr(I.photoPrecedente, L))}">‹</button><img alt=""><span class="cnt" aria-live="polite"></span><button class="n" type="button" aria-label="${e(tr(I.photoSuivante, L))}">›</button></div>
 <script src="/app.js?v=${VERSION}" defer></script>
 </body>
 </html>

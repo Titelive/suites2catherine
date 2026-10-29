@@ -118,6 +118,18 @@
    "en": "Bookings on",
    "de": "Buchungen auf",
    "nl": "Boekingen op"
+  },
+  "afficherPhotos": {
+   "fr": "Afficher les {n} photos",
+   "en": "Show all {n} photos",
+   "de": "Alle {n} Fotos ansehen",
+   "nl": "Alle {n} foto’s bekijken"
+  },
+  "reservationEnLigne": {
+   "fr": "Réservation en ligne sur",
+   "en": "Book online on",
+   "de": "Online buchen auf",
+   "nl": "Online boeken op"
   }
  },
  "accueil": {
@@ -776,7 +788,15 @@
    "nl": "Een vraag, of een **persoonlijke ontvangst**? Ze antwoordt u."
   },
   "telephone": "+33 6 62 06 86 40",
-  "email": "lsdc54000@gmail.com"
+  "email": "lsdc54000@gmail.com",
+  "nom": "Catherine",
+  "photo": "/voyageurs/livret/img/catherine-02.jpg",
+  "role": {
+   "fr": "Votre hôte à Nancy",
+   "en": "Your host in Nancy",
+   "de": "Ihre Gastgeberin in Nancy",
+   "nl": "Uw gastvrouw in Nancy"
+  }
  },
  "liens": {
   "reservation": "https://www.les-suites-de-catherine.fr",
