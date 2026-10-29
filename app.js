@@ -5,6 +5,10 @@ var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matc
 var hd=document.getElementById("hd");
 function solid(){if(hd)hd.classList.toggle("solid",window.scrollY>8)}
 solid();window.addEventListener("scroll",solid,{passive:true});
+/* menu : souligne la rubrique en cours */
+var navs=[].slice.call(document.querySelectorAll(".nav a"));
+function spy(){var y=window.scrollY+120,cur=null;navs.forEach(function(a){var t=document.querySelector(a.getAttribute("href"));if(t&&t.getBoundingClientRect().top+window.scrollY<=y)cur=a});navs.forEach(function(a){a.classList.toggle("on",a===cur)})}
+if(navs.length){spy();window.addEventListener("scroll",spy,{passive:true})}
 /* apparitions douces */
 var els=[].slice.call(document.querySelectorAll(".every h2,.amen li,.suite .sh,.suite .gal,.facts li,.suite .tx,.suite .park,.book,.nancy h2,.walk li,.stan,.see h3,.places li,.host,.gift"));
 els.forEach(function(el){el.classList.add("rv");var p=el.parentElement,i=p?[].indexOf.call(p.children,el):0;el.style.setProperty("--d",Math.min(i,8)*.06+"s")});
