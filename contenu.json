@@ -298,7 +298,8 @@
    },
    "surface": 33,
    "personnes": 2,
-   "chambres": 1
+   "chambres": 1,
+   "photoParking": ""
   },
   {
    "ancre": "suite-si-calme",
@@ -312,8 +313,7 @@
     "/img/sicalme-lit.jpg",
     "/img/sicalme-fauteuil.jpg",
     "/img/sicalme-fleurs.jpg",
-    "/img/sicalme-radio.jpg",
-    "/img/parking-sicalme.jpg"
+    "/img/sicalme-radio.jpg"
    ],
    "adresse": "3 rue Guerrier de Dumast",
    "prix": {
@@ -383,7 +383,8 @@
    },
    "surface": 55,
    "personnes": 3,
-   "chambres": 2
+   "chambres": 2,
+   "photoParking": "/img/parking-sicalme.jpg"
   },
   {
    "ancre": "suite-saint-georges",
@@ -466,7 +467,8 @@
    },
    "surface": 35,
    "personnes": 2,
-   "chambres": 1
+   "chambres": 1,
+   "photoParking": ""
   }
  ],
  "note": {

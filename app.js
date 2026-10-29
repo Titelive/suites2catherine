@@ -26,6 +26,7 @@ function close(){lb.hidden=true;document.body.style.overflow="";if(back)back.foc
 document.querySelectorAll(".gal").forEach(function(g){var bs=[].slice.call(g.querySelectorAll(".g"));
   bs.forEach(function(b,i){b.addEventListener("click",function(){list=bs;back=b;show(i);lb.querySelector(".x").focus()})});
   var all=g.querySelector("[data-all]");if(all)all.addEventListener("click",function(){list=bs;back=all;show(0);lb.querySelector(".x").focus()})});
+document.querySelectorAll(".pk").forEach(function(b){b.addEventListener("click",function(){list=[b];back=b;show(0);lb.querySelector(".x").focus()})});
 lb.addEventListener("click",function(e){var c=e.target.closest("button");if(e.target===lb||(c&&c.classList.contains("x")))close();else if(c&&c.classList.contains("p"))show(k-1);else if(c&&c.classList.contains("n"))show(k+1)});
 document.addEventListener("keydown",function(e){if(lb.hidden)return;if(e.key==="Escape")close();if(e.key==="ArrowLeft")show(k-1);if(e.key==="ArrowRight")show(k+1)});
 var sx=0;lb.addEventListener("touchstart",function(e){sx=e.touches[0].clientX},{passive:true});

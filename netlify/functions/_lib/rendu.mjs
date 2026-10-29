@@ -2,7 +2,7 @@
 // enregistrée par Catherine dans l'espace d'édition). Utilisé par la fonction « page » et par outils/rendu.mjs.
 export const SITE = "https://suites2catherine.com";
 export const LANGS = ["fr", "en", "de", "nl"];
-export const VERSION = "22";
+export const VERSION = "23";
 export const ICONS = {
 "grid": "<rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\" rx=\"1.5\"/>",
 "pin": "<path d=\"M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z\"/><circle cx=\"12\" cy=\"9.5\" r=\"2.5\"/>",
@@ -125,7 +125,7 @@ export function renderPage(C, L, opts = {}) {
 <div class="sb"><div class="sx">
 <ul class="facts">${facts}</ul>
 <p class="tx">${rich(tr(s.texte, L))}</p>
-${park ? `<p class="park">${ic("car")}<span>${rich(park)}</span></p>` : ""}
+${park ? `<div class="park">${ic("car")}<span>${rich(park)}</span>${s.photoParking ? `<button class="pk" type="button" data-full="${e(s.photoParking)}" aria-label="${e(plain(park))}"><img src="${e(s.photoParking)}" alt="" loading="lazy" decoding="async"></button>` : ""}</div>` : ""}
 </div>
 <aside class="book"><p class="pr"><span>${e(tr(I.des, L))}</span> <b>${e(tr(s.prix, L))}</b> <span>${e(tr(I.parNuit, L))}</span></p>
 <a class="btn grad" href="${e(book)}" rel="noopener">${ic("cal")}${e(tr(I.reserver, L))}</a>
