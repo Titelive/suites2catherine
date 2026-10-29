@@ -1,0 +1,11 @@
+{
+  "name": "suites2catherine",
+  "private": true,
+  "description": "Site public des Suites de Catherine (suites2catherine.com) et son espace d'édition",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0",
+    "@netlify/functions": "^2.8.2"
+  }
+}

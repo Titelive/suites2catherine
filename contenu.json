@@ -1,0 +1,787 @@
+{
+ "seo": {
+  "titre": {
+   "fr": "Location de suites à Nancy, place Stanislas | Les Suites de Catherine",
+   "en": "Suites to rent in Nancy, near Place Stanislas | Les Suites de Catherine",
+   "de": "Suiten in Nancy mieten, Place Stanislas | Les Suites de Catherine",
+   "nl": "Suites huren in Nancy, Place Stanislas | Les Suites de Catherine"
+  },
+  "description": {
+   "fr": "Suites meublées au centre de Nancy, à 5 min à pied de la place Stanislas : wifi, cuisine équipée, arrivée autonome. Pour une nuit ou un mois, dès 40,30 €.",
+   "en": "Furnished suites in central Nancy, 5 minutes’ walk from Place Stanislas: wifi, equipped kitchen, self check-in. For one night or one month, from €40.30.",
+   "de": "Möblierte Suiten im Zentrum von Nancy, 5 Gehminuten von der Place Stanislas: WLAN, Küche, Self-Check-in. Für eine Nacht oder einen Monat, ab 40,30 €.",
+   "nl": "Gemeubileerde suites in het centrum van Nancy, 5 minuten lopen van de Place Stanislas: wifi, keuken, zelf inchecken. Eén nacht of een maand, vanaf € 40,30."
+  },
+  "image": "/img/og.jpg",
+  "imageAlt": {
+   "fr": "Une voyageuse lit sur le lit blanc d’une des Suites de Catherine, à Nancy",
+   "en": "A guest reading on the white bed of one of Les Suites de Catherine, in Nancy",
+   "de": "Ein Gast liest auf dem weißen Bett einer der Suites de Catherine in Nancy",
+   "nl": "Een gast leest op het witte bed van een van de Suites de Catherine in Nancy"
+  }
+ },
+ "interface": {
+  "menu": {
+   "suites": {
+    "fr": "Les suites",
+    "en": "The suites",
+    "de": "Die Suiten",
+    "nl": "De suites"
+   },
+   "nancy": {
+    "fr": "Nancy",
+    "en": "Nancy",
+    "de": "Nancy",
+    "nl": "Nancy"
+   },
+   "offrir": {
+    "fr": "Offrir",
+    "en": "Gift cards",
+    "de": "Verschenken",
+    "nl": "Cadeaubon"
+   },
+   "contact": {
+    "fr": "Contact",
+    "en": "Contact",
+    "de": "Kontakt",
+    "nl": "Contact"
+   }
+  },
+  "reserver": {
+   "fr": "Réserver",
+   "en": "Book",
+   "de": "Buchen",
+   "nl": "Boeken"
+  },
+  "des": {
+   "fr": "dès",
+   "en": "from",
+   "de": "ab",
+   "nl": "vanaf"
+  },
+  "parNuit": {
+   "fr": "la nuit",
+   "en": "per night",
+   "de": "pro Nacht",
+   "nl": "per nacht"
+  },
+  "allerAuContenu": {
+   "fr": "Aller au contenu",
+   "en": "Skip to content",
+   "de": "Zum Inhalt",
+   "nl": "Naar de inhoud"
+  },
+  "nomDuMenu": {
+   "fr": "Menu",
+   "en": "Menu",
+   "de": "Menü",
+   "nl": "Menu"
+  },
+  "langue": {
+   "fr": "Langue",
+   "en": "Language",
+   "de": "Sprache",
+   "nl": "Taal"
+  },
+  "photoN": {
+   "fr": "Photo {i} sur {n}, {s}",
+   "en": "Photo {i} of {n}, {s}",
+   "de": "Foto {i} von {n}, {s}",
+   "nl": "Foto {i} van {n}, {s}"
+  },
+  "photosDe": {
+   "fr": "Photos de {s}",
+   "en": "Photos of {s}",
+   "de": "Fotos: {s}",
+   "nl": "Foto’s van {s}"
+  },
+  "fermer": {
+   "fr": "Fermer",
+   "en": "Close",
+   "de": "Schließen",
+   "nl": "Sluiten"
+  },
+  "photoPrecedente": {
+   "fr": "Photo précédente",
+   "en": "Previous photo",
+   "de": "Vorheriges Foto",
+   "nl": "Vorige foto"
+  },
+  "photoSuivante": {
+   "fr": "Photo suivante",
+   "en": "Next photo",
+   "de": "Nächstes Foto",
+   "nl": "Volgende foto"
+  },
+  "reservationsSur": {
+   "fr": "Réservations sur",
+   "en": "Bookings on",
+   "de": "Buchungen auf",
+   "nl": "Boekingen op"
+  }
+ },
+ "accueil": {
+  "titre": {
+   "fr": "Trois suites au cœur de Nancy",
+   "en": "Three suites in the heart of Nancy",
+   "de": "Drei Suiten im Herzen von Nancy",
+   "nl": "Drie suites in het hart van Nancy"
+  },
+  "chapo": {
+   "fr": "À quelques minutes à pied de la **place Stanislas**, pour **une nuit ou pour un mois**.",
+   "en": "A few minutes’ walk from **Place Stanislas**, for **one night or one month**.",
+   "de": "Wenige Gehminuten von der **Place Stanislas**, für **eine Nacht oder einen Monat**.",
+   "nl": "Op een paar minuten lopen van de **Place Stanislas**, voor **één nacht of een maand**."
+  }
+ },
+ "equipements": {
+  "titre": {
+   "fr": "Dans chaque suite",
+   "en": "In every suite",
+   "de": "In jeder Suite",
+   "nl": "In elke suite"
+  },
+  "liste": [
+   {
+    "icone": "wifi",
+    "texte": {
+     "fr": "Wifi rapide",
+     "en": "Fast wifi",
+     "de": "Schnelles WLAN",
+     "nl": "Snelle wifi"
+    }
+   },
+   {
+    "icone": "pot",
+    "texte": {
+     "fr": "Cuisine équipée",
+     "en": "Equipped kitchen",
+     "de": "Ausgestattete Küche",
+     "nl": "Ingerichte keuken"
+    }
+   },
+   {
+    "icone": "cup",
+    "texte": {
+     "fr": "Nespresso",
+     "en": "Nespresso",
+     "de": "Nespresso",
+     "nl": "Nespresso"
+    }
+   },
+   {
+    "icone": "towel",
+    "texte": {
+     "fr": "Linge de lit et de toilette",
+     "en": "Bed linen and towels",
+     "de": "Bettwäsche und Handtücher",
+     "nl": "Bedlinnen en handdoeken"
+    }
+   },
+   {
+    "icone": "bottle",
+    "texte": {
+     "fr": "Produits de bain",
+     "en": "Toiletries",
+     "de": "Pflegeprodukte",
+     "nl": "Verzorgingsproducten"
+    }
+   },
+   {
+    "icone": "tv",
+    "texte": {
+     "fr": "Télévision",
+     "en": "TV",
+     "de": "Fernseher",
+     "nl": "Televisie"
+    }
+   },
+   {
+    "icone": "key",
+    "texte": {
+     "fr": "Arrivée autonome ou accueil par Catherine",
+     "en": "Self check-in or a welcome from Catherine",
+     "de": "Self-Check-in oder Empfang durch Catherine",
+     "nl": "Zelf inchecken of ontvangst door Catherine"
+    }
+   }
+  ]
+ },
+ "suites": [
+  {
+   "ancre": "suite-35",
+   "nom": "La Suite 35",
+   "nomCourt": "Suite 35",
+   "couleur": "#B4577A",
+   "couleurClaire": "#E49AB2",
+   "couleurFond": "#F7E6EC",
+   "photoAccueil": "/img/suites-03.jpg",
+   "photos": [
+    "/img/suites-06.jpg",
+    "/img/suites-03.jpg",
+    "/img/suites-07.jpg",
+    "/img/suites-01.jpg",
+    "/img/suites-09.jpg",
+    "/img/suites-02.jpg",
+    "/img/suites-10.jpg",
+    "/img/suites-05.jpg",
+    "/img/suites-04.jpg"
+   ],
+   "adresse": "35 rue des Carmes",
+   "prix": {
+    "fr": "53,95 €",
+    "en": "€53.95",
+    "de": "53,95 €",
+    "nl": "€ 53,95"
+   },
+   "caracteristiques": [
+    {
+     "icone": "people",
+     "texte": {
+      "fr": "2 personnes",
+      "en": "2 guests",
+      "de": "2 Personen",
+      "nl": "2 personen"
+     }
+    },
+    {
+     "icone": "area",
+     "texte": {
+      "fr": "33 m²",
+      "en": "33 m²",
+      "de": "33 m²",
+      "nl": "33 m²"
+     }
+    },
+    {
+     "icone": "bed",
+     "texte": {
+      "fr": "Lit queen",
+      "en": "Queen bed",
+      "de": "Queensize-Bett",
+      "nl": "Queensize bed"
+     }
+    },
+    {
+     "icone": "lift",
+     "texte": {
+      "fr": "3e étage, ascenseur",
+      "en": "3rd floor, lift",
+      "de": "3. Stock, Aufzug",
+      "nl": "3e verdieping, lift"
+     }
+    }
+   ],
+   "texte": {
+    "fr": "En plein centre : la **place Stanislas**, le **marché central** et la **gare** se font à pied. Un **salon au mobilier chiné**, une **cuisine complète**.",
+    "en": "Right in the centre: **Place Stanislas**, the **covered market** and the **station** are all on foot. A **living room with vintage furniture** and a **full kitchen**.",
+    "de": "Mitten im Zentrum: **Place Stanislas**, **Markthalle** und **Bahnhof** erreichen Sie zu Fuß. Ein **Wohnzimmer mit Vintage-Möbeln** und eine **komplette Küche**.",
+    "nl": "Midden in het centrum: **Place Stanislas**, de **markthal** en het **station** liggen op loopafstand. Een **woonkamer met vintage meubels** en een **complete keuken**."
+   },
+   "parking": {
+    "fr": "Parkings Dom Calmet et Charles III tout proches, avec **bornes de recharge**.",
+    "en": "Dom Calmet and Charles III car parks nearby, with **EV charging**.",
+    "de": "Parkhäuser Dom Calmet und Charles III in der Nähe, mit **Ladestationen**.",
+    "nl": "Parkeergarages Dom Calmet en Charles III vlakbij, met **laadpalen**."
+   },
+   "surface": 33,
+   "personnes": 2,
+   "chambres": 1
+  },
+  {
+   "ancre": "suite-si-calme",
+   "nom": "La Suite Si Calme",
+   "nomCourt": "Si Calme",
+   "couleur": "#3F8466",
+   "couleurClaire": "#8CC7A9",
+   "couleurFond": "#E1F0E7",
+   "photoAccueil": "/img/sicalme-fauteuil.jpg",
+   "photos": [
+    "/img/sicalme-lit.jpg",
+    "/img/sicalme-fauteuil.jpg",
+    "/img/sicalme-fleurs.jpg",
+    "/img/sicalme-radio.jpg",
+    "/img/parking-sicalme.jpg"
+   ],
+   "adresse": "3 rue Guerrier de Dumast",
+   "prix": {
+    "fr": "65 €",
+    "en": "€65",
+    "de": "65 €",
+    "nl": "€ 65"
+   },
+   "caracteristiques": [
+    {
+     "icone": "people",
+     "texte": {
+      "fr": "3 personnes",
+      "en": "3 guests",
+      "de": "3 Personen",
+      "nl": "3 personen"
+     }
+    },
+    {
+     "icone": "area",
+     "texte": {
+      "fr": "55 m²",
+      "en": "55 m²",
+      "de": "55 m²",
+      "nl": "55 m²"
+     }
+    },
+    {
+     "icone": "door",
+     "texte": {
+      "fr": "2 chambres",
+      "en": "2 bedrooms",
+      "de": "2 Schlafzimmer",
+      "nl": "2 slaapkamers"
+     }
+    },
+    {
+     "icone": "bed",
+     "texte": {
+      "fr": "Lit queen et lit simple",
+      "en": "Queen bed and single bed",
+      "de": "Queensize- und Einzelbett",
+      "nl": "Queensize en eenpersoonsbed"
+     }
+    },
+    {
+     "icone": "lift",
+     "texte": {
+      "fr": "4e étage, ascenseur",
+      "en": "4th floor, lift",
+      "de": "4. Stock, Aufzug",
+      "nl": "4e verdieping, lift"
+     }
+    }
+   ],
+   "texte": {
+    "fr": "**Plein ouest, côté jardin** : le **calme** en centre-ville. Séjour avec **cuisine ouverte**, lave-linge, lave-vaisselle, **salle de bains et WC séparés**.",
+    "en": "**West-facing, over the garden**: **quiet** in the middle of town. Living room with **open kitchen**, washing machine, dishwasher, **bathroom and separate toilet**.",
+    "de": "**Nach Westen, zum Garten hin**: **Ruhe** mitten in der Stadt. Wohnzimmer mit **offener Küche**, Waschmaschine, Geschirrspüler, **Bad und separates WC**.",
+    "nl": "**Op het westen, aan de tuinkant**: **rust** midden in de stad. Woonkamer met **open keuken**, wasmachine, vaatwasser, **badkamer en apart toilet**."
+   },
+   "parking": {
+    "fr": "**Place de parking sécurisée** en option.",
+    "en": "**Secure parking space** on request.",
+    "de": "**Gesicherter Parkplatz** auf Anfrage.",
+    "nl": "**Beveiligde parkeerplaats** op aanvraag."
+   },
+   "surface": 55,
+   "personnes": 3,
+   "chambres": 2
+  },
+  {
+   "ancre": "suite-saint-georges",
+   "nom": "La Suite Saint Georges",
+   "nomCourt": "Saint Georges",
+   "couleur": "#4F5DB8",
+   "couleurClaire": "#98A3E6",
+   "couleurFond": "#E4E7F8",
+   "photoAccueil": "/img/stgeorges-ampoule.jpg",
+   "photos": [
+    "/img/stgeorges-lit.jpg",
+    "/img/stgeorges-table.jpg",
+    "/img/stgeorges-ampoule.jpg"
+   ],
+   "adresse": "66 rue Saint Georges",
+   "prix": {
+    "fr": "40,30 €",
+    "en": "€40.30",
+    "de": "40,30 €",
+    "nl": "€ 40,30"
+   },
+   "caracteristiques": [
+    {
+     "icone": "people",
+     "texte": {
+      "fr": "2 personnes",
+      "en": "2 guests",
+      "de": "2 Personen",
+      "nl": "2 personen"
+     }
+    },
+    {
+     "icone": "area",
+     "texte": {
+      "fr": "35 m²",
+      "en": "35 m²",
+      "de": "35 m²",
+      "nl": "35 m²"
+     }
+    },
+    {
+     "icone": "bed",
+     "texte": {
+      "fr": "Lit double",
+      "en": "Double bed",
+      "de": "Doppelbett",
+      "nl": "Tweepersoonsbed"
+     }
+    },
+    {
+     "icone": "stairs",
+     "texte": {
+      "fr": "2e étage, escalier en colimaçon",
+      "en": "2nd floor, spiral staircase",
+      "de": "2. Stock, Wendeltreppe",
+      "nl": "2e verdieping, wenteltrap"
+     }
+    },
+    {
+     "icone": "moon",
+     "texte": {
+      "fr": "2 nuits minimum",
+      "en": "2-night minimum",
+      "de": "Mindestens 2 Nächte",
+      "nl": "Minimaal 2 nachten"
+     }
+    }
+   ],
+   "texte": {
+    "fr": "Des **murs en pierre**, près de la **place Stanislas** et de la **cathédrale**. Un **vrai salon**, un **bureau pour télétravailler** et un lave-linge.",
+    "en": "**Exposed stone walls**, close to **Place Stanislas** and the **cathedral**. A **real living room**, a **desk for remote work** and a washing machine.",
+    "de": "**Wände aus Naturstein**, nahe der **Place Stanislas** und der **Kathedrale**. Ein **echtes Wohnzimmer**, ein **Schreibtisch fürs Homeoffice** und eine Waschmaschine.",
+    "nl": "**Muren van natuursteen**, vlak bij de **Place Stanislas** en de **kathedraal**. Een **echte woonkamer**, een **bureau om thuis te werken** en een wasmachine."
+   },
+   "parking": {
+    "fr": "**Parking Stanislas**, rue Maurice Barrès.",
+    "en": "**Stanislas car park**, rue Maurice Barrès.",
+    "de": "**Parkhaus Stanislas**, Rue Maurice Barrès.",
+    "nl": "**Parkeergarage Stanislas**, rue Maurice Barrès."
+   },
+   "surface": 35,
+   "personnes": 2,
+   "chambres": 1
+  }
+ ],
+ "note": {
+  "fr": "9,1/10 sur Booking.com en 2023",
+  "en": "Rated 9.1/10 on Booking.com in 2023",
+  "de": "9,1/10 auf Booking.com im Jahr 2023",
+  "nl": "9,1/10 op Booking.com in 2023"
+ },
+ "nancy": {
+  "titre": {
+   "fr": "Nancy à pied",
+   "en": "Nancy on foot",
+   "de": "Nancy zu Fuß",
+   "nl": "Nancy te voet"
+  },
+  "depuis": {
+   "fr": "Depuis la Suite 35",
+   "en": "From La Suite 35",
+   "de": "Ab La Suite 35",
+   "nl": "Vanaf La Suite 35"
+  },
+  "trajets": [
+   {
+    "icone": "basket",
+    "duree": {
+     "fr": "2 min",
+     "en": "2 min",
+     "de": "2 Min.",
+     "nl": "2 min"
+    },
+    "lieu": {
+     "fr": "Marché central",
+     "en": "Covered market",
+     "de": "Markthalle",
+     "nl": "Markthal"
+    }
+   },
+   {
+    "icone": "gate",
+    "duree": {
+     "fr": "5 min",
+     "en": "5 min",
+     "de": "5 Min.",
+     "nl": "5 min"
+    },
+    "lieu": {
+     "fr": "Place Stanislas",
+     "en": "Place Stanislas",
+     "de": "Place Stanislas",
+     "nl": "Place Stanislas"
+    }
+   },
+   {
+    "icone": "hall",
+    "duree": {
+     "fr": "5 min",
+     "en": "5 min",
+     "de": "5 Min.",
+     "nl": "5 min"
+    },
+    "lieu": {
+     "fr": "Centre Prouvé",
+     "en": "Prouvé centre",
+     "de": "Centre Prouvé",
+     "nl": "Centre Prouvé"
+    }
+   },
+   {
+    "icone": "train",
+    "duree": {
+     "fr": "10 min",
+     "en": "10 min",
+     "de": "10 Min.",
+     "nl": "10 min"
+    },
+    "lieu": {
+     "fr": "Gare",
+     "en": "Station",
+     "de": "Bahnhof",
+     "nl": "Station"
+    }
+   }
+  ],
+  "stanislasTitre": {
+   "fr": "La place Stanislas",
+   "en": "Place Stanislas",
+   "de": "Die Place Stanislas",
+   "nl": "De Place Stanislas"
+  },
+  "stanislas": {
+   "fr": "Achevée en 1755, classée à l’**UNESCO** depuis 1983. Les **grilles dorées de Jean Lamour**, des terrasses et, les soirs d’été, le son et lumière « **Rendez-vous** ».",
+   "en": "Completed in 1755, a **UNESCO** World Heritage site since 1983. **Jean Lamour’s gilded gates**, café terraces and, on summer nights, the “**Rendez-vous**” light show.",
+   "de": "1755 vollendet, seit 1983 **UNESCO**-Welterbe. Die **vergoldeten Gitter von Jean Lamour**, Caféterrassen und an Sommerabenden die Lichtshow „**Rendez-vous**“.",
+   "nl": "Voltooid in 1755, sinds 1983 **UNESCO**-werelderfgoed. De **vergulde hekken van Jean Lamour**, terrasjes en op zomeravonden de lichtshow „**Rendez-vous**”."
+  },
+  "aVoirTitre": {
+   "fr": "À voir aussi",
+   "en": "Also worth a visit",
+   "de": "Ebenfalls sehenswert",
+   "nl": "Ook de moeite waard"
+  },
+  "lieux": [
+   {
+    "icone": "museum",
+    "nom": {
+     "fr": "Musée des Beaux-Arts",
+     "en": "Museum of Fine Arts",
+     "de": "Musée des Beaux-Arts",
+     "nl": "Musée des Beaux-Arts"
+    },
+    "lien": "https://musee-des-beaux-arts.nancy.fr/accueil-145.html",
+    "texte": {
+     "fr": "Du Pérugin à Delacroix, la collection Daum et Jean Prouvé.",
+     "en": "From Perugino to Delacroix, the Daum collection and Jean Prouvé.",
+     "de": "Von Perugino bis Delacroix, die Daum-Sammlung und Jean Prouvé.",
+     "nl": "Van Perugino tot Delacroix, de Daum-collectie en Jean Prouvé."
+    },
+    "info": {
+     "fr": "Fermé le mardi",
+     "en": "Closed Tuesdays",
+     "de": "Dienstags geschlossen",
+     "nl": "Dinsdag gesloten"
+    }
+   },
+   {
+    "icone": "palace",
+    "nom": {
+     "fr": "Musée lorrain",
+     "en": "Musée lorrain",
+     "de": "Musée lorrain",
+     "nl": "Musée lorrain"
+    },
+    "lien": "https://www.musee-lorrain.nancy.fr",
+    "texte": {
+     "fr": "Le palais ducal, Georges de La Tour et les Gueux de Callot.",
+     "en": "The Ducal Palace, Georges de La Tour and Callot’s Beggars.",
+     "de": "Der Herzogspalast, Georges de La Tour und Callots Bettler.",
+     "nl": "Het hertogelijk paleis, Georges de La Tour en Callots Bedelaars."
+    },
+    "info": {
+     "fr": "Fermé lundi et mardi",
+     "en": "Closed Mondays and Tuesdays",
+     "de": "Montags und dienstags geschlossen",
+     "nl": "Maandag en dinsdag gesloten"
+    }
+   },
+   {
+    "icone": "house",
+    "nom": {
+     "fr": "Villa Majorelle",
+     "en": "Villa Majorelle",
+     "de": "Villa Majorelle",
+     "nl": "Villa Majorelle"
+    },
+    "lien": "https://musee-ecole-de-nancy.nancy.fr/la-villa-majorelle-2887.html",
+    "texte": {
+     "fr": "La première maison entièrement Art nouveau de Nancy.",
+     "en": "Nancy’s first house built entirely in Art Nouveau.",
+     "de": "Das erste reine Jugendstilhaus in Nancy.",
+     "nl": "Het eerste volledige art-nouveauhuis van Nancy."
+    },
+    "info": {
+     "fr": "",
+     "en": "",
+     "de": "",
+     "nl": ""
+    }
+   },
+   {
+    "icone": "flower",
+    "nom": {
+     "fr": "Musée de l’École de Nancy",
+     "en": "Musée de l’École de Nancy",
+     "de": "Musée de l’École de Nancy",
+     "nl": "Musée de l’École de Nancy"
+    },
+    "lien": "https://musee-ecole-de-nancy.nancy.fr/accueil-2676.html",
+    "texte": {
+     "fr": "Le grand rendez-vous de l’Art nouveau.",
+     "en": "The essential stop for Nancy’s Art Nouveau.",
+     "de": "Der wichtigste Ort für Nancys Jugendstil.",
+     "nl": "Dé plek voor de art nouveau van Nancy."
+    },
+    "info": {
+     "fr": "",
+     "en": "",
+     "de": "",
+     "nl": ""
+    }
+   },
+   {
+    "icone": "fish",
+    "nom": {
+     "fr": "Muséum-Aquarium",
+     "en": "Museum-Aquarium",
+     "de": "Muséum-Aquarium",
+     "nl": "Muséum-Aquarium"
+    },
+    "lien": "https://www.museumaquariumdenancy.eu/accueil",
+    "texte": {
+     "fr": "Aquariums et galerie zoologique dans un immeuble Art déco.",
+     "en": "Aquariums and a natural history gallery in an Art Deco building.",
+     "de": "Aquarien und zoologische Galerie in einem Art-déco-Bau.",
+     "nl": "Aquaria en een zoölogische galerij in een art-decogebouw."
+    },
+    "info": {
+     "fr": "Fermé le lundi",
+     "en": "Closed Mondays",
+     "de": "Montags geschlossen",
+     "nl": "Maandag gesloten"
+    }
+   },
+   {
+    "icone": "anvil",
+    "nom": {
+     "fr": "Musée de l’Histoire du Fer",
+     "en": "Iron History Museum",
+     "de": "Eisengeschichtliches Museum",
+     "nl": "Museum van de geschiedenis van het ijzer"
+    },
+    "lien": "https://www.museehistoiredufer.fr/accueil/",
+    "texte": {
+     "fr": "Le fer de la tour Eiffel a été coulé ici.",
+     "en": "The Eiffel Tower’s iron was cast here.",
+     "de": "Hier wurde das Eisen des Eiffelturms gegossen.",
+     "nl": "Hier werd het ijzer van de Eiffeltoren gegoten."
+    },
+    "info": {
+     "fr": "Jarville, fermé le mardi",
+     "en": "Jarville, closed Tuesdays",
+     "de": "Jarville, dienstags geschlossen",
+     "nl": "Jarville, dinsdag gesloten"
+    }
+   },
+   {
+    "icone": "leaf",
+    "nom": {
+     "fr": "Jardin botanique Jean-Marie Pelt",
+     "en": "Jean-Marie Pelt Botanical Garden",
+     "de": "Botanischer Garten Jean-Marie Pelt",
+     "nl": "Botanische tuin Jean-Marie Pelt"
+    },
+    "lien": "https://www.jardinbotaniquedenancy.eu/accueil",
+    "texte": {
+     "fr": "12 000 espèces et 2 500 m² de serres tropicales.",
+     "en": "12,000 species and 2,500 m² of tropical greenhouses.",
+     "de": "12.000 Arten und 2.500 m² Tropengewächshäuser.",
+     "nl": "12.000 soorten en 2.500 m² tropische kassen."
+    },
+    "info": {
+     "fr": "Villers-lès-Nancy",
+     "en": "Villers-lès-Nancy",
+     "de": "Villers-lès-Nancy",
+     "nl": "Villers-lès-Nancy"
+    }
+   },
+   {
+    "icone": "tree",
+    "nom": {
+     "fr": "Parc de la Pépinière",
+     "en": "Parc de la Pépinière",
+     "de": "Parc de la Pépinière",
+     "nl": "Parc de la Pépinière"
+    },
+    "lien": "",
+    "texte": {
+     "fr": "Le grand parc du centre-ville.",
+     "en": "The big city-centre park.",
+     "de": "Der große Park im Stadtzentrum.",
+     "nl": "Het grote stadspark."
+    },
+    "info": {
+     "fr": "",
+     "en": "",
+     "de": "",
+     "nl": ""
+    }
+   }
+  ],
+  "officeTourisme": {
+   "fr": "Office de tourisme",
+   "en": "Tourist office",
+   "de": "Tourismusbüro",
+   "nl": "VVV Nancy"
+  },
+  "lienOfficeTourisme": "https://www.nancy-tourisme.fr/"
+ },
+ "cadeau": {
+  "titre": {
+   "fr": "Offrir un séjour",
+   "en": "Give a stay",
+   "de": "Einen Aufenthalt verschenken",
+   "nl": "Een verblijf cadeau doen"
+  },
+  "texte": {
+   "fr": "Une carte cadeau pour l’une des trois suites, **valable 12 mois** et **envoyée par e-mail** dès le paiement.",
+   "en": "A gift card for any of the three suites, **valid for 12 months** and **emailed** as soon as it’s paid.",
+   "de": "Ein Gutschein für eine der drei Suiten, **12 Monate gültig** und nach der Zahlung **per E-Mail** verschickt.",
+   "nl": "Een cadeaubon voor een van de drie suites, **12 maanden geldig** en **per e-mail** verstuurd zodra hij betaald is."
+  },
+  "bouton": {
+   "fr": "Commander une carte cadeau",
+   "en": "Order a gift card",
+   "de": "Gutschein bestellen",
+   "nl": "Cadeaubon bestellen"
+  }
+ },
+ "contact": {
+  "titre": {
+   "fr": "Écrire à Catherine",
+   "en": "Contact Catherine",
+   "de": "Catherine schreiben",
+   "nl": "Catherine schrijven"
+  },
+  "texte": {
+   "fr": "Une question, un **accueil sur mesure** : elle vous répond.",
+   "en": "A question, or a **personal welcome**? She’ll get back to you.",
+   "de": "Eine Frage oder ein **persönlicher Empfang**? Sie antwortet Ihnen.",
+   "nl": "Een vraag, of een **persoonlijke ontvangst**? Ze antwoordt u."
+  },
+  "telephone": "+33 6 62 06 86 40",
+  "email": "lsdc54000@gmail.com"
+ },
+ "liens": {
+  "reservation": "https://www.les-suites-de-catherine.fr",
+  "instagram": "https://www.instagram.com/les_suites_de_catherine/",
+  "nomInstagram": "les_suites_de_catherine",
+  "facebook": "https://www.facebook.com/les.suites.de.catherine"
+ }
+}

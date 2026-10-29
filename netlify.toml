@@ -1,4 +1,9 @@
-# Site statique : pas de build, on publie la racine du dépôt.
+# Site statique + fonctions : les pages fr/en/de/nl sont rendues à partir du contenu
+# (contenu.json, ou la version enregistrée par Catherine dans /admin/).
 [build]
   publish = "."
   command = ""
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
