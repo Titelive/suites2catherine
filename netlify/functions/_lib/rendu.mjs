@@ -2,7 +2,7 @@
 // enregistrée par Catherine dans l'espace d'édition). Utilisé par la fonction « page » et par outils/rendu.mjs.
 export const SITE = "https://suites2catherine.com";
 export const LANGS = ["fr", "en", "de", "nl"];
-export const VERSION = "20";
+export const VERSION = "21";
 export const ICONS = {
 "grid": "<rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\" rx=\"1.5\"/>",
 "pin": "<path d=\"M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z\"/><circle cx=\"12\" cy=\"9.5\" r=\"2.5\"/>",

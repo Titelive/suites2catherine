@@ -193,7 +193,7 @@ strong{font-weight:700}
   .nav{display:none}
   .sb,.nn,.duo .wrap{grid-template-columns:1fr}
   .book{position:static}
-  .cards{grid-template-columns:repeat(3,78%);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:-20px;padding:0 20px 6px;gap:14px}
+  .cards{grid-template-columns:repeat(3,44%);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:-20px;padding:0 20px 6px;gap:14px}
   .cards::-webkit-scrollbar{display:none}
   .cards li{scroll-snap-align:start}
 }
@@ -202,6 +202,7 @@ strong{font-weight:700}
   .brand span{display:none}.mark{width:48px}
   .hero{padding-top:24px}
   .amen,.facts,.places{grid-template-columns:1fr}
+  .cards{grid-template-columns:repeat(3,78%)}
   /* galerie : défilement horizontal, une photo à la fois */
   .gal{display:flex;height:auto;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:-20px;padding-inline:20px;scroll-padding-inline:20px;border-radius:0;gap:8px}
   .gal::-webkit-scrollbar{display:none}
