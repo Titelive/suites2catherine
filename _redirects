@@ -5,6 +5,11 @@
 # l'espace d'édition parle aussi à l'administration du livret (titelive.me)
 /admin/livret-api  https://titelive.me/livret/admin/api  200!
 
+# Agenda de Catherine : hébergé sur titelive.me (fonctions, clés, publication Instagram),
+# servi ici pour rester dans l'univers des Suites
+/agenda      https://titelive.me/agenda/        200!
+/agenda/*    https://titelive.me/agenda/:splat  200!
+
 # www -> domaine nu
 https://www.suites2catherine.com/*  https://suites2catherine.com/:splat  301!
 http://www.suites2catherine.com/*   https://suites2catherine.com/:splat  301!
