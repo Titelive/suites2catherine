@@ -220,3 +220,12 @@ strong{font-weight:700}
   body{padding-bottom:76px}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}.mark path{stroke-dashoffset:0}.js .rv{opacity:1;transform:none}}
+
+/* crédit Titelive */
+.foot .tlw{flex-basis:100%;text-align:right}
+.tlc{display:inline-flex;align-items:center;gap:8px;padding:6px 14px 6px 12px;border:1px solid var(--line2);border-radius:99px;background:var(--bg);color:var(--mute);text-decoration:none;font-size:13px;line-height:1.2;transition:border-color .25s,color .25s,transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+.tlc img{width:22px;height:22px;border-radius:50%;display:block;object-fit:cover}
+.tlc b{color:var(--ink);font-weight:700}
+.tlc:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-2px);box-shadow:0 10px 22px -16px rgba(0,0,0,.35)}
+@media (max-width:640px){.foot .tlw{text-align:left}}
+@media (prefers-reduced-motion:reduce){.tlc{transition:none}.tlc:hover{transform:none}}
