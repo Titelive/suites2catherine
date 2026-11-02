@@ -1,0 +1,22 @@
+name: Mise en ligne IONOS
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+concurrency: deploy-ionos
+jobs:
+  deploy:
+    if: ${{ vars.IONOS_DEPLOY == 'on' }}   # activé seulement quand le serveur est prêt
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Envoyer le site et le mettre en ligne via SSH
+        env:
+          KEY: ${{ secrets.IONOS_SSH_KEY }}
+          HOST: ${{ secrets.IONOS_HOST }}
+        run: |
+          install -m 600 /dev/null ~/key && printf '%s\n' "$KEY" > ~/key
+          # Le serveur et le script de mise en ligne viennent du dépôt titelive (à mettre en ligne en premier).
+          tar czf - --exclude=.git . | ssh -i ~/key -o StrictHostKeyChecking=accept-new root@"$HOST" \
+            'set -e; rm -rf /srv/incoming/suites2catherine; mkdir -p /srv/incoming/suites2catherine; tar xzf - -C /srv/incoming/suites2catherine; bash /srv/titelive/current/server/deploy/deploy.sh suites2catherine /srv/incoming/suites2catherine'
