@@ -2,7 +2,7 @@
 // enregistrée par Catherine dans l'espace d'édition). Utilisé par la fonction « page » et par outils/rendu.mjs.
 export const SITE = "https://suites2catherine.com";
 export const LANGS = ["fr", "en", "de", "nl"];
-export const VERSION = "24";
+export const VERSION = "25";
 export const ICONS = {
 "grid": "<rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\" rx=\"1.5\"/>",
 "pin": "<path d=\"M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z\"/><circle cx=\"12\" cy=\"9.5\" r=\"2.5\"/>",
@@ -95,7 +95,7 @@ export function renderPage(C, L, opts = {}) {
       numberOfBedrooms: s.chambres ? +s.chambres : undefined }))) };
 
   const M = I.menu || {};
-  const nav = [["suites", M.suites], ["nancy", M.nancy], ["offrir", M.offrir], ["contact", M.contact]].map(([i, n]) => `<a href="#${i}">${e(tr(n, L))}</a>`).join("");
+  const nav = [["suites", M.suites, "bed"], ["nancy", M.nancy, "palace"], ["offrir", M.offrir, "gift"], ["contact", M.contact, "mail"]].map(([i, n, k]) => `<a href="#${i}">${ic(k)}<span>${e(tr(n, L))}</span></a>`).join("");
   const langs = `<details class="lang"><summary aria-label="${e(tr(I.langue, L))} : ${LNAME[L]}">${flag(L, "c")}</summary><ul>` +
     LANGS.map((x) => `<li><a href="/${x}/" hreflang="${x}" lang="${x}"` + (x === L ? ' aria-current="true"' : "") + `>${flag(x, "m")}<span>${LNAME[x]}</span></a></li>`).join("") + "</ul></details>";
   const brand = `<a class="brand" href="#top" aria-label="Les Suites de Catherine">${MARK}<span>Les Suites<br>de Catherine</span></a>`;
@@ -217,10 +217,10 @@ ${tourism ? `<p><a class="link" href="${e(tourism)}" target="_blank" rel="noopen
 </div></section>
 </main>
 <footer class="foot"><div class="wrap">
-${brand}
-${IG ? `<p><a class="ig" href="${e(IG)}" target="_blank" rel="noopener">${ic("ig")}${e((C.liens || {}).nomInstagram || "Instagram")}</a></p>` : ""}
-<p class="small">${e(tr(I.reservationsSur, L))} <a href="${e(resa)}/${L}" rel="noopener">${e(resaHost)}</a><br>Photos © Les Suites de Catherine</p>
-<p class="small tlw"><a class="tlc" href="https://titelive.me" target="_blank" rel="noopener" title="titelive.me"><span>${({ fr: "Site réalisé par", en: "Website by", de: "Website von", nl: "Website door" })[L] || "Site réalisé par"}</span><img src="https://titelive.me/img/titelive-logo.png" alt="" width="22" height="22" loading="lazy"><b>Titelive</b></a></p>
+<div class="frow">${brand}
+<nav class="flinks">${IG ? `<a class="fl" href="${e(IG)}" target="_blank" rel="noopener">${ic("ig")}<span>${e((C.liens || {}).nomInstagram || "Instagram")}</span></a>` : ""}<a class="fl" href="${e(resa)}/${L}" rel="noopener">${ic("cal")}<span>${e(tr(I.reservationsSur, L))} <b>${e(resaHost)}</b></span></a></nav></div>
+<div class="frow fsub"><p>Photos © Les Suites de Catherine</p>
+<a class="fl tlc" href="https://titelive.me" target="_blank" rel="noopener" title="titelive.me"><img src="https://titelive.me/img/titelive-logo.png" alt="" width="22" height="22" loading="lazy"><span>${({ fr: "Site réalisé par", en: "Website by", de: "Website von", nl: "Website door" })[L] || "Site réalisé par"} <b>Titelive</b></span></a></div>
 </div></footer>
 ${mins ? `<div class="mbar"><p><span>${e(tr(I.des, L))}</span> <b>${e(mins.t)}</b> <span>${e(tr(I.parNuit, L))}</span></p><a class="btn grad" href="${e(book)}" rel="noopener">${e(tr(I.reserver, L))}</a></div>` : ""}
 <div class="lb" id="lb" hidden><button class="x" type="button" aria-label="${e(tr(I.fermer, L))}">×</button><button class="p" type="button" aria-label="${e(tr(I.photoPrecedente, L))}">‹</button><img alt=""><span class="cnt" aria-live="polite"></span><button class="n" type="button" aria-label="${e(tr(I.photoSuivante, L))}">›</button></div>
