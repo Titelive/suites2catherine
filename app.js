@@ -5,6 +5,10 @@ var reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matc
 var hd=document.getElementById("hd");
 function solid(){if(hd)hd.classList.toggle("solid",window.scrollY>8)}
 solid();window.addEventListener("scroll",solid,{passive:true});
+/* barre de progression de lecture */
+if(!reduce){var pg=document.createElement("div");pg.className="prog";pg.setAttribute("aria-hidden","true");document.body.appendChild(pg);
+ var tk=false;function prog(){tk=false;var h=document.documentElement.scrollHeight-innerHeight;pg.style.transform="scaleX("+(h>0?Math.min(1,scrollY/h):0)+")"}
+ prog();window.addEventListener("scroll",function(){if(!tk){tk=true;requestAnimationFrame(prog)}},{passive:true});window.addEventListener("resize",prog)}
 /* menu : souligne la rubrique en cours */
 var navs=[].slice.call(document.querySelectorAll(".nav a"));
 function spy(){var y=window.scrollY+120,cur=null;navs.forEach(function(a){var t=document.querySelector(a.getAttribute("href"));if(t&&t.getBoundingClientRect().top+window.scrollY<=y)cur=a});navs.forEach(function(a){a.classList.toggle("on",a===cur)})}
@@ -21,7 +25,7 @@ if(lg){document.addEventListener("click",function(e){if(lg.open&&!lg.contains(e.
 /* visionneuse */
 var lb=document.getElementById("lb");if(!lb)return;
 var im=lb.querySelector("img"),cnt=lb.querySelector(".cnt"),list=[],k=0,back=null;
-function show(i){k=(i+list.length)%list.length;im.src=list[k].getAttribute("data-full");if(cnt)cnt.textContent=(k+1)+" / "+list.length;lb.hidden=false;document.body.style.overflow="hidden"}
+function show(i){k=(i+list.length)%list.length;im.src=list[k].getAttribute("data-full");im.classList.remove("sl");void im.offsetWidth;im.classList.add("sl");if(cnt)cnt.textContent=(k+1)+" / "+list.length;lb.hidden=false;document.body.style.overflow="hidden"}
 function close(){lb.hidden=true;document.body.style.overflow="";if(back)back.focus()}
 document.querySelectorAll(".gal").forEach(function(g){var bs=[].slice.call(g.querySelectorAll(".g"));
   bs.forEach(function(b,i){b.addEventListener("click",function(){list=bs;back=b;show(i);lb.querySelector(".x").focus()})});
