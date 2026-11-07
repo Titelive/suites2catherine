@@ -1,5 +1,5 @@
 // Pages publiques /fr/ /en/ /de/ /nl/, rendues à partir du contenu en vigueur.
-// Mises en cache par Netlify et vidées dès que Catherine enregistre (étiquette « pages »).
+// En-têtes de cache hérités de Netlify (sans effet sur le serveur IONOS, qui rend la page à chaque visite).
 import { renderPage, LANGS } from "./_lib/rendu.mjs";
 import { contenuActuel } from "./_lib/contenu.mjs";
 
