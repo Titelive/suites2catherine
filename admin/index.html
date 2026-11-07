@@ -328,7 +328,7 @@ function openOutil(id){var o=OUTILS.filter(function(x){return x.id===id})[0];if(
   /* même session : l'espace des liens reprend l'identifiant et le mot de passe de l'admin, sans redemander */
   if(id==="liens"){try{var dec=decodeURIComponent(escape(atob(AUTH))),i=dec.indexOf(":");sessionStorage.setItem("lvusr",dec.slice(0,i));sessionStorage.setItem("lvpw",dec.slice(i+1))}catch(e){}}
   var box=$("outil"),fr=box.querySelector('iframe[data-o="'+id+'"]');
-  if(!fr){fr=document.createElement("iframe");fr.dataset.o=id;fr.title=o.nom;fr.src=o.src;box.appendChild(fr)}
+  if(!fr){fr=document.createElement("iframe");fr.dataset.o=id;fr.setAttribute("aria-label",o.nom);fr.src=o.src;box.appendChild(fr)}
   [].forEach.call(box.children,function(f){f.hidden=f!==fr});
   document.documentElement.style.setProperty("--toph",document.querySelector("header.top").offsetHeight+"px");
   box.hidden=false;document.body.classList.add("en-outil");selTab(id);window.scrollTo(0,0)}
