@@ -39,6 +39,10 @@ a{color:inherit}
 .tabs button i{width:9px;height:9px;border-radius:50%;background:var(--c,#999)}
 .tabs button:hover{background:var(--bg);color:var(--ink)}
 .tabs button[aria-selected=true]{background:var(--ink);color:#fff}
+.tabs .sep{width:1px;align-self:stretch;margin:4px 4px;background:var(--line2)}
+.outil{height:calc(100dvh - var(--toph,72px));background:var(--bg)}
+.outil iframe{display:block;width:100%;height:100%;border:0;background:#fff}
+body.en-outil .page,body.en-outil .save{display:none!important}
 .tlinks{display:flex;gap:16px;font-size:14px;align-items:center;font-weight:600}
 .tlinks a,.tlinks button{color:var(--ink);text-decoration:none;background:none;border:0;padding:0;display:inline-flex;gap:5px;align-items:center}
 .tlinks a:hover,.tlinks button:hover{text-decoration:underline}
@@ -217,11 +221,10 @@ legend{font:800 16px/1 var(--sans);padding:0 8px}
   <div class="tabs" role="tablist" id="tabs"></div>
   <div class="tlinks">
     <a href="/fr/" target="_blank" rel="noopener">Voir le site <svg class="ic" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
-    <a href="/agenda/" target="_blank" rel="noopener">Agenda Instagram <svg class="ic" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
-    <a href="https://titelive.me/livret/admin/" target="_blank" rel="noopener">Liens voyageurs <svg class="ic" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
     <button type="button" id="out">Se déconnecter</button>
   </div>
 </div></header>
+<div class="outil" id="outil" hidden></div>
 <div class="page">
   <aside class="side">
     <h2 id="stitle"></h2>
@@ -291,18 +294,34 @@ function api(url,body){return fetch(url,{method:"POST",headers:{"Content-Type":"
 $("lf").addEventListener("submit",function(ev){ev.preventDefault();$("lerr").textContent="";
   AUTH=btoa(unescape(encodeURIComponent($("u").value.trim()+":"+$("pw").value)));
   api("/admin/api",{action:"connexion"}).then(function(){try{sessionStorage.setItem("lsdc.auth",AUTH)}catch(e){}start()}).catch(function(e){$("lerr").textContent=e.message==="Session expirée : reconnectez-vous."?"Identifiant ou mot de passe incorrect.":e.message})});
-function logout(){AUTH="";try{sessionStorage.removeItem("lsdc.auth")}catch(e){}$("app").hidden=true;$("login").hidden=false}
+function logout(){AUTH="";try{sessionStorage.removeItem("lsdc.auth");sessionStorage.removeItem("lvpw");sessionStorage.removeItem("lvusr")}catch(e){}closeOutil();$("outil").innerHTML="";$("app").hidden=true;$("login").hidden=false}
 $("out").addEventListener("click",function(){if(dirty()&&!confirm("Des modifications ne sont pas enregistrées. Se déconnecter quand même ?"))return;logout()});
 
 function start(){$("login").hidden=true;$("app").hidden=false;
-  $("tabs").innerHTML=DOCS.map(function(d){return '<button type="button" role="tab" data-doc="'+d.id+'" style="--c:'+d.c+'"><i></i>'+d.nom+"</button>"}).join("");
+  $("tabs").innerHTML=DOCS.map(function(d){return '<button type="button" role="tab" data-doc="'+d.id+'" style="--c:'+d.c+'"><i></i>'+d.nom+"</button>"}).join("")+
+    '<span class="sep" aria-hidden="true"></span>'+OUTILS.map(function(o){return '<button type="button" role="tab" data-outil="'+o.id+'" style="--c:'+o.c+'"><i></i>'+o.nom+"</button>"}).join("");
   loadIcons().then(function(){openDoc(DOCS[0])})}
-$("tabs").addEventListener("click",function(e){var b=e.target.closest("[data-doc]");if(!b)return;var d=DOCS.filter(function(x){return x.id===b.dataset.doc})[0];
+$("tabs").addEventListener("click",function(e){var bo=e.target.closest("[data-outil]");if(bo){openOutil(bo.dataset.outil);return}
+  var b=e.target.closest("[data-doc]");if(!b)return;var d=DOCS.filter(function(x){return x.id===b.dataset.doc})[0];
+  if(document.body.classList.contains("en-outil")){closeOutil();if(d===state.doc){selTab(d.id);return}}
   if(d===state.doc)return;if(dirty()&&!confirm("Des modifications ne sont pas enregistrées. Changer de page quand même ?"))return;openDoc(d)});
 
 
+/* ===== outils intégrés : liens voyageurs et agenda Instagram, affichés dans l'admin ===== */
+var OUTILS=[{id:"liens",nom:"Liens voyageurs",c:"#C8873A",src:"/admin/liens/"},{id:"agenda",nom:"Agenda Instagram",c:"#C13584",src:"/agenda/"}];
+function selTab(id){[].forEach.call($("tabs").children,function(b){if(b.dataset)b.setAttribute("aria-selected",(b.dataset.doc||b.dataset.outil)===id)})}
+function openOutil(id){var o=OUTILS.filter(function(x){return x.id===id})[0];if(!o)return;
+  /* même session : l'espace des liens reprend l'identifiant et le mot de passe de l'admin, sans redemander */
+  if(id==="liens"){try{var dec=decodeURIComponent(escape(atob(AUTH))),i=dec.indexOf(":");sessionStorage.setItem("lvusr",dec.slice(0,i));sessionStorage.setItem("lvpw",dec.slice(i+1))}catch(e){}}
+  var box=$("outil"),fr=box.querySelector('iframe[data-o="'+id+'"]');
+  if(!fr){fr=document.createElement("iframe");fr.dataset.o=id;fr.title=o.nom;fr.src=o.src;box.appendChild(fr)}
+  [].forEach.call(box.children,function(f){f.hidden=f!==fr});
+  document.documentElement.style.setProperty("--toph",document.querySelector("header.top").offsetHeight+"px");
+  box.hidden=false;document.body.classList.add("en-outil");selTab(id);window.scrollTo(0,0)}
+function closeOutil(){$("outil").hidden=true;document.body.classList.remove("en-outil")}
+
 function openDoc(d){state.doc=d;var rs=document.documentElement.style;if(d.livret){rs.setProperty("--brand",d.c);rs.setProperty("--brand2","color-mix(in srgb,"+d.c+" 72%,#000)")}else{rs.removeProperty("--brand");rs.removeProperty("--brand2")}$("form").innerHTML='<div class="loading">Chargement…</div>';
-  [].forEach.call($("tabs").children,function(b){b.setAttribute("aria-selected",b.dataset.doc===d.id)});
+  selTab(d.id);
   $("prev").hidden=!d.preview;$("hist").hidden=!d.hist;pvSetup(d);
   api(d.api,d.read).then(function(j){state.data=j.contenu;state.orig=j.original;state.modifie=!!j.modifie;if(j.icones)state.icons=j.icones;state.saved=JSON.stringify(j.contenu);render();status()}).catch(function(e){$("form").innerHTML='<div class="loading">'+esc(e.message)+"</div>"})}
 
