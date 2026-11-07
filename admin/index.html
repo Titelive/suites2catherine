@@ -310,7 +310,11 @@ $("out").addEventListener("click",function(){if(dirty()&&!confirm("Des modificat
 function start(){$("login").hidden=true;$("app").hidden=false;
   $("tabs").innerHTML=DOCS.map(function(d){return '<button type="button" role="tab" data-doc="'+d.id+'" title="'+d.nom+'" style="--c:'+d.c+'"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true">'+P[d.livret?"book":"home"]+"</svg>"+d.nom.replace(/^Livret · /,"")+"</button>"}).join("")+
     '<span class="sep" aria-hidden="true"></span>'+OUTILS.map(function(o){return '<button type="button" role="tab" data-outil="'+o.id+'"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true">'+P[o.ic]+"</svg>"+o.nom+"</button>"}).join("");
-  loadIcons().then(function(){openDoc(DOCS[0])})}
+  var t=ongletURL(),dt=DOCS.filter(function(x){return x.id===t})[0];
+  loadIcons().then(function(){openDoc(dt||DOCS[0]);if(!dt&&OUTILS.some(function(o){return o.id===t}))openOutil(t)})}
+/* l'onglet ouvert est gardé dans l'adresse (?onglet=…) : un rafraîchissement y revient */
+function ongletURL(){try{return new URLSearchParams(location.search).get("onglet")||""}catch(e){return ""}}
+function memoOnglet(id){try{var u=new URL(location.href);if(id===DOCS[0].id)u.searchParams.delete("onglet");else u.searchParams.set("onglet",id);history.replaceState(history.state,"",u.pathname+u.search+u.hash)}catch(e){}}
 $("tabs").addEventListener("click",function(e){var bo=e.target.closest("[data-outil]");if(bo){openOutil(bo.dataset.outil);return}
   var b=e.target.closest("[data-doc]");if(!b)return;var d=DOCS.filter(function(x){return x.id===b.dataset.doc})[0];
   if(document.body.classList.contains("en-outil")){closeOutil();if(d===state.doc){selTab(d.id);return}}
@@ -319,12 +323,12 @@ $("tabs").addEventListener("click",function(e){var bo=e.target.closest("[data-ou
 
 /* ===== outils intégrés : liens voyageurs et agenda Instagram, affichés dans l'admin ===== */
 var OUTILS=[{id:"liens",nom:"Liens voyageurs",ic:"link",src:"/admin/liens/"},{id:"agenda",nom:"Agenda Instagram",ic:"cal",src:"/agenda/"}];
-function selTab(id){[].forEach.call($("tabs").children,function(b){if(b.dataset)b.setAttribute("aria-selected",(b.dataset.doc||b.dataset.outil)===id)})}
+function selTab(id){memoOnglet(id);[].forEach.call($("tabs").children,function(b){if(b.dataset)b.setAttribute("aria-selected",(b.dataset.doc||b.dataset.outil)===id)})}
 function openOutil(id){var o=OUTILS.filter(function(x){return x.id===id})[0];if(!o)return;
   /* même session : l'espace des liens reprend l'identifiant et le mot de passe de l'admin, sans redemander */
   if(id==="liens"){try{var dec=decodeURIComponent(escape(atob(AUTH))),i=dec.indexOf(":");sessionStorage.setItem("lvusr",dec.slice(0,i));sessionStorage.setItem("lvpw",dec.slice(i+1))}catch(e){}}
   var box=$("outil"),fr=box.querySelector('iframe[data-o="'+id+'"]');
-  if(!fr){fr=document.createElement("iframe");fr.dataset.o=id;fr.title=o.nom;fr.src=o.src;box.appendChild(fr)}
+  if(!fr){fr=document.createElement("iframe");fr.dataset.o=id;fr.setAttribute("aria-label",o.nom);fr.src=o.src;box.appendChild(fr)}
   [].forEach.call(box.children,function(f){f.hidden=f!==fr});
   document.documentElement.style.setProperty("--toph",document.querySelector("header.top").offsetHeight+"px");
   box.hidden=false;document.body.classList.add("en-outil");selTab(id);window.scrollTo(0,0)}
