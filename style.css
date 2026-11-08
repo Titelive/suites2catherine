@@ -2,7 +2,7 @@
    Fond blanc, typographie arrondie, coins arrondis, ombres légères.
    Chaque suite garde sa couleur : rose (35), vert (Si Calme), bleu (Saint Georges). */
 :root{
-  --bg:#fff;--soft:#F7F7F7;--ink:#222222;--mute:#6A6A6A;--line:#EBEBEB;--line2:#DDDDDD;
+  --bg:#fff;--soft:#F7F7F7;--ink:#222222;--mute:#222222;--line:#EBEBEB;--line2:#DDDDDD;
   --brand:#B4577A;--brand2:#93406A;
   --sans:"Nunito Sans","Helvetica Neue",Arial,sans-serif;--serif:"Instrument Serif","Times New Roman",serif;
   --r:16px;--r2:12px;--sh:0 6px 20px rgba(0,0,0,.08);--sh2:0 8px 28px rgba(0,0,0,.12);
@@ -372,3 +372,5 @@ strong{font-weight:700}
   .js .gal.rv{clip-path:none}.js .gal.rv .g img,.js .amen li.rv .ic,.js .facts li.rv .ic,.js .walk li.rv{transform:none}
   .js .every h2.rv::after,.js .nancy h2.rv::after,.js .see h3.rv::after{transform:none}
 }
+/* pas de texte gris : les indications des champs restent foncées */
+input::placeholder,textarea::placeholder{color:var(--ink);opacity:1;font-weight:400}
