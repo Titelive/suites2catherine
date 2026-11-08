@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&family=Instrument+Serif:ital@1&display=swap">
 <style>
-:root{--bg:#F7F7F7;--paper:#fff;--ink:#222;--mute:#6A6A6A;--line:#EBEBEB;--line2:#DDDDDD;--brand:#B4577A;--brand2:#93406A;--ok:#2F7A55;--bad:#C13515;
+:root{--bg:#F7F7F7;--paper:#fff;--ink:#222;--mute:#222;--line:#EBEBEB;--line2:#DDDDDD;--brand:#B4577A;--brand2:#93406A;--ok:#2F7A55;--bad:#C13515;
   --sans:"Nunito Sans","Helvetica Neue",Arial,sans-serif;--serif:"Instrument Serif","Times New Roman",serif;--sh:0 6px 20px rgba(0,0,0,.08);--sh2:0 8px 28px rgba(0,0,0,.12)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
@@ -65,7 +65,7 @@ body.en-outil .page,body.en-outil .save{display:none!important}
 .side nav a{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:10px;text-decoration:none;font-weight:600;color:var(--mute)}
 .side nav a:hover{background:#fff;color:var(--ink)}
 .side nav a.on{background:#fff;color:var(--ink);box-shadow:var(--sh)}
-.side nav a .ic{width:19px;height:19px;opacity:.75}.side nav a.on .ic,.side nav a:hover .ic{opacity:1;color:var(--brand,var(--ink))}
+.side nav a .ic{width:19px;height:19px}.side nav a.on .ic,.side nav a:hover .ic{opacity:1;color:var(--brand,var(--ink))}
 .tabs button .ic{width:16px;height:16px}
 .side .reset{margin-top:18px;font-size:14px;background:none;border:0;padding:0;color:var(--mute);text-decoration:underline;font-weight:600}
 .side .help{margin-top:20px;font-size:13.5px;color:var(--mute);background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px}
@@ -209,6 +209,9 @@ legend{font:800 16px/1 var(--sans);padding:0 8px}
   #pvbtn.on{display:inline-flex}
 }
 @media(max-width:860px){.page.wpv{grid-template-columns:1fr}.phone{width:min(392px,100%);border-width:8px;border-radius:38px}}
+
+/* pas de texte gris : les indications des champs restent foncées */
+input::placeholder,textarea::placeholder{color:var(--ink);opacity:1;font-weight:400}
 </style>
 </head>
 <body>
