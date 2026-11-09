@@ -56,7 +56,7 @@ body.en-outil .page,body.en-outil .save{display:none!important}
 .tlinks .deco:hover{background:#A82820;transform:translateY(-1px)}.tlinks .deco:focus-visible{outline:3px solid #F2B8B3;outline-offset:2px}
 
 /* mise en page */
-.page{max-width:1280px;margin:auto;padding:28px 20px 120px;display:grid;grid-template-columns:240px minmax(0,1fr);gap:28px;align-items:start}
+.page{max-width:1360px;margin:auto;padding:28px 24px 120px;display:grid;grid-template-columns:240px minmax(0,1fr);column-gap:32px;row-gap:28px;align-items:start}
 .side{position:sticky;top:90px}
 .side h2{font:800 24px/1.15 var(--sans);margin:0 0 4px;display:flex;align-items:center;gap:10px}
 .side h2 i{width:12px;height:12px;border-radius:50%;background:var(--c,var(--ink));flex:none}
@@ -131,7 +131,7 @@ legend{font:800 16px/1 var(--sans);padding:0 8px}
 
 /* barre d'enregistrement */
 .save{position:fixed;inset:auto 0 0;z-index:40;background:#fff;border-top:1px solid var(--line);box-shadow:0 -4px 16px rgba(0,0,0,.05)}
-.save .in{max-width:1280px;margin:auto;padding:12px 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.save .in{max-width:1360px;margin:auto;padding:12px 24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .save .msg{margin-right:auto;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px}
 .save .msg i{width:10px;height:10px;border-radius:50%;background:var(--ok);flex:none}
 .save .msg.dirty i{background:#E0A100}
@@ -178,7 +178,7 @@ legend{font:800 16px/1 var(--sans);padding:0 8px}
 }
 
 /* ===== aperçu en direct du livret (téléphone à droite du formulaire) ===== */
-.page.wpv{max-width:1600px;grid-template-columns:220px minmax(0,1fr) 392px}
+.page.wpv{grid-template-columns:240px minmax(0,1fr) 392px}
 .pv{position:sticky;top:14px;display:flex;flex-direction:column;align-items:center;gap:10px}
 .pv[hidden]{display:none}
 .pvh{width:100%;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
@@ -199,8 +199,8 @@ legend{font:800 16px/1 var(--sans);padding:0 8px}
 .pvbusy{position:absolute;right:14px;bottom:14px;z-index:4;font:700 11px/1 var(--sans);color:#fff;background:rgba(0,0,0,.55);padding:6px 9px;border-radius:999px;opacity:0;transition:opacity .2s}
 .pvbusy.on{opacity:1}
 #pvbtn{display:none}
-@media(max-width:1240px){
-  .page.wpv{grid-template-columns:220px minmax(0,1fr);max-width:1280px}
+@media(max-width:1300px){
+  .page.wpv{grid-template-columns:240px minmax(0,1fr)}
   .pv{position:fixed;inset:0;z-index:65;background:rgba(20,20,22,.6);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:14px;justify-content:center;display:none}
   .pv.open{display:flex}
   .pvh{max-width:392px;color:#fff}.pvh .pvx{display:inline-grid}
