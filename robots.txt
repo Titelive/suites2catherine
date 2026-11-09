@@ -2,6 +2,9 @@ User-agent: *
 Disallow: /voyageurs/
 Disallow: /agenda/
 Disallow: /admin/
+# Adresse technique (API du livret servie depuis titelive.me) : en GET elle répond 405,
+# ce que Google classe en « Bloquée en raison d'un autre problème de type 4xx ».
+Disallow: /livret/
 Allow: /
 
 Sitemap: https://suites2catherine.com/sitemap.xml
