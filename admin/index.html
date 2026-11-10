@@ -71,7 +71,7 @@ body.en-outil .page,body.en-outil .save{display:none!important}
 .side .help{margin-top:20px;font-size:13.5px;color:var(--mute);background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px}
 .side .help b{color:var(--ink)}
 main{min-width:0}
-section.sec{background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px;margin-bottom:20px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+section.sec{scroll-margin-top:96px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px;margin-bottom:20px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
 section.sec>h3{font:800 22px/1.2 var(--sans);margin:0 0 20px;padding-bottom:16px;border-bottom:1px solid var(--line)}
 
 /* champs */
@@ -313,11 +313,16 @@ $("out").addEventListener("click",function(){if(dirty()&&!confirm("Des modificat
 function start(){$("login").hidden=true;$("app").hidden=false;
   $("tabs").innerHTML=DOCS.map(function(d){return '<button type="button" role="tab" data-doc="'+d.id+'" title="'+d.nom+'" style="--c:'+d.c+'"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true">'+P[d.livret?"book":"home"]+"</svg>"+d.nom.replace(/^Livret · /,"")+"</button>"}).join("")+
     '<span class="sep" aria-hidden="true"></span>'+OUTILS.map(function(o){return '<button type="button" role="tab" data-outil="'+o.id+'"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true">'+P[o.ic]+"</svg>"+o.nom+"</button>"}).join("");
-  var t=ongletURL(),dt=DOCS.filter(function(x){return x.id===t})[0];
-  loadIcons().then(function(){openDoc(dt||DOCS[0]);if(!dt&&OUTILS.some(function(o){return o.id===t}))openOutil(t)})}
-/* l'onglet ouvert est gardé dans l'adresse (?onglet=…) : un rafraîchissement y revient */
+  var t=ongletURL(),v=vueURL(),dt=DOCS.filter(function(x){return x.id===t})[0];
+  loadIcons().then(function(){openDoc(dt||DOCS[0],true);if(!dt&&OUTILS.some(function(o){return o.id===t}))openOutil(t,v)})}
+/* l'onglet ouvert est gardé dans l'adresse (?onglet=…), la sous-page d'un outil aussi (&vue=…, ex. « #avis » de l'agenda)
+   et la partie de la page (#s3) : un rafraîchissement revient exactement au même endroit */
 function ongletURL(){try{return new URLSearchParams(location.search).get("onglet")||""}catch(e){return ""}}
-function memoOnglet(id){try{var u=new URL(location.href);if(id===DOCS[0].id)u.searchParams.delete("onglet");else u.searchParams.set("onglet",id);history.replaceState(history.state,"",u.pathname+u.search+u.hash)}catch(e){}}
+function vueURL(){try{var v=new URLSearchParams(location.search).get("vue")||"";return /^[\w.-]*(#[\w-]*)?$/.test(v)?v:""}catch(e){return ""}}
+function memoOnglet(id,vue){try{var u=new URL(location.href),avant=u.searchParams.get("onglet")||DOCS[0].id;
+  if(id===DOCS[0].id)u.searchParams.delete("onglet");else u.searchParams.set("onglet",id);
+  if(vue)u.searchParams.set("vue",vue);else u.searchParams.delete("vue");
+  var h=avant===id&&!vue?u.hash:"";history.replaceState(history.state,"",u.pathname+u.search+h)}catch(e){}}
 $("tabs").addEventListener("click",function(e){var bo=e.target.closest("[data-outil]");if(bo){openOutil(bo.dataset.outil);return}
   var b=e.target.closest("[data-doc]");if(!b)return;var d=DOCS.filter(function(x){return x.id===b.dataset.doc})[0];
   if(document.body.classList.contains("en-outil")){closeOutil();if(d===state.doc){selTab(d.id);return}}
@@ -326,22 +331,31 @@ $("tabs").addEventListener("click",function(e){var bo=e.target.closest("[data-ou
 
 /* ===== outils intégrés : liens voyageurs et agenda Instagram, affichés dans l'admin ===== */
 var OUTILS=[{id:"liens",nom:"Liens voyageurs",ic:"link",src:"/admin/liens/"},{id:"agenda",nom:"Agenda Instagram",ic:"cal",src:"/agenda/"}];
-function selTab(id){memoOnglet(id);[].forEach.call($("tabs").children,function(b){if(b.dataset)b.setAttribute("aria-selected",(b.dataset.doc||b.dataset.outil)===id)})}
-function openOutil(id){var o=OUTILS.filter(function(x){return x.id===id})[0];if(!o)return;
+function selTab(id,vue){memoOnglet(id,vue);[].forEach.call($("tabs").children,function(b){if(b.dataset)b.setAttribute("aria-selected",(b.dataset.doc||b.dataset.outil)===id)})}
+function openOutil(id,vue){var o=OUTILS.filter(function(x){return x.id===id})[0];if(!o)return;
   /* même session : l'espace des liens reprend l'identifiant et le mot de passe de l'admin, sans redemander */
   if(id==="liens"){try{var dec=decodeURIComponent(escape(atob(AUTH))),i=dec.indexOf(":");sessionStorage.setItem("lvusr",dec.slice(0,i));sessionStorage.setItem("lvpw",dec.slice(i+1))}catch(e){}}
   var box=$("outil"),fr=box.querySelector('iframe[data-o="'+id+'"]');
-  if(!fr){fr=document.createElement("iframe");fr.dataset.o=id;fr.setAttribute("aria-label",o.nom);fr.src=o.src;box.appendChild(fr)}
+  if(!fr){fr=document.createElement("iframe");fr.dataset.o=id;fr.setAttribute("aria-label",o.nom);fr.src=o.src+(vue||"");box.appendChild(fr);
+    /* l'outil change de sous-page (lien #avis, flyer.html…) : l'adresse de l'admin suit, pour y revenir au rafraîchissement */
+    var suivre=function(){if(!fr.hidden&&document.body.classList.contains("en-outil"))memoOnglet(id,vueOutil(fr,o))};
+    fr.addEventListener("load",function(){try{fr.contentWindow.addEventListener("hashchange",suivre)}catch(e){}suivre()})}
+  else vue=vueOutil(fr,o);
   [].forEach.call(box.children,function(f){f.hidden=f!==fr});
   document.documentElement.style.setProperty("--toph",document.querySelector("header.top").offsetHeight+"px");
-  box.hidden=false;document.body.classList.add("en-outil");selTab(id);window.scrollTo(0,0)}
+  box.hidden=false;document.body.classList.add("en-outil");selTab(id,vue);window.scrollTo(0,0)}
+/* sous-page affichée dans l'outil, relative à son adresse : "#avis", "flyer.html"… ("" pour l'accueil de l'outil) */
+function vueOutil(fr,o){try{var l=fr.contentWindow.location;if(l.pathname.indexOf(o.src)!==0)return "";
+  var v=l.pathname.slice(o.src.length).replace(/^index\.html$/,"")+(l.hash.length>1?l.hash:"");return /^[\w.-]*(#[\w-]*)?$/.test(v)?v:""}catch(e){return ""}}
 function closeOutil(){$("outil").hidden=true;document.body.classList.remove("en-outil")}
 
-function openDoc(d){state.doc=d;var rs=document.documentElement.style;if(d.livret){rs.setProperty("--brand",d.c);rs.setProperty("--brand2","color-mix(in srgb,"+d.c+" 72%,#000)")}else{rs.removeProperty("--brand");rs.removeProperty("--brand2")}$("form").innerHTML='<div class="loading">Chargement…</div>';
+function openDoc(d,retour){state.doc=d;var rs=document.documentElement.style;if(d.livret){rs.setProperty("--brand",d.c);rs.setProperty("--brand2","color-mix(in srgb,"+d.c+" 72%,#000)")}else{rs.removeProperty("--brand");rs.removeProperty("--brand2")}$("form").innerHTML='<div class="loading">Chargement…</div>';
   selTab(d.id);
   $("prev").hidden=!d.preview;$("hist").hidden=!d.hist;pvSetup(d);
-  api(d.api,d.read).then(function(j){state.data=j.contenu;state.orig=j.original;state.modifie=!!j.modifie;if(j.icones)state.icons=j.icones;state.saved=JSON.stringify(j.contenu);render();status()}).catch(function(e){$("form").innerHTML='<div class="loading">'+esc(e.message)+"</div>"})}
+  api(d.api,d.read).then(function(j){state.data=j.contenu;state.orig=j.original;state.modifie=!!j.modifie;if(j.icones)state.icons=j.icones;state.saved=JSON.stringify(j.contenu);render();status();if(retour)allerSection()}).catch(function(e){$("form").innerHTML='<div class="loading">'+esc(e.message)+"</div>"})}
 
+/* après un rafraîchissement, revient à la partie qui était affichée (#s3…), une fois le formulaire chargé */
+function allerSection(){var h=location.hash;if(!/^#s[\w-]+$/.test(h))return;var s=document.getElementById(h.slice(1));if(s)s.scrollIntoView()}
 function dirty(){return state.data&&JSON.stringify(state.data)!==state.saved}
 function status(msg,kind){var m=$("msg");m.className="msg"+(kind?" "+kind:dirty()?" dirty":"");
   m.querySelector("span").textContent=msg||(dirty()?"Modifications non enregistrées":"À jour, en ligne");
