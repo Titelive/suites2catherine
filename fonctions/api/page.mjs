@@ -1,5 +1,4 @@
 // Pages publiques /fr/ /en/ /de/ /nl/, rendues à partir du contenu en vigueur.
-// En-têtes de cache hérités de Netlify (sans effet sur le serveur IONOS, qui rend la page à chaque visite).
 import { renderPage, LANGS } from "./_lib/rendu.mjs";
 import { contenuActuel } from "./_lib/contenu.mjs";
 
@@ -13,8 +12,6 @@ export default async (req) => {
     headers: {
       "Content-Type": "text/html; charset=utf-8",
       "Cache-Control": "public, max-age=0, must-revalidate",
-      "Netlify-CDN-Cache-Control": "public, durable, max-age=86400, stale-while-revalidate=60",
-      "Netlify-Cache-Tag": "pages",
     },
   });
 };

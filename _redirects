@@ -1,6 +1,6 @@
 # fichiers techniques : pas servis
 /outils/*   /fr/  301!
-/netlify/*  /fr/  301!
+/fonctions/*  /fr/  301!
 /admin      /admin/  301
 # l'espace d'édition parle aussi à l'administration du livret (titelive.me)
 /admin/livret-api  https://titelive.me/livret/admin/api  200!
@@ -19,8 +19,8 @@
 https://www.suites2catherine.com/*  https://suites2catherine.com/:splat  301!
 http://www.suites2catherine.com/*   https://suites2catherine.com/:splat  301!
 
-# Livret d'accueil caché : il reste hébergé sur titelive.me (fonctions + données
-# Netlify Blobs), on le sert ici en proxy pour garder l'adresse suites2catherine.com
+# Livret d’accueil caché : il reste hébergé sur titelive.me (fonctions et données),
+# on le sert ici en proxy pour garder l’adresse suites2catherine.com
 # Ses fichiers (qr.js, img/) sont sous /livret/ sur titelive.me ; la page elle-même
 # passe par /voyageurs/livret/ (fonction livret-page, qui garde le ?c=JETON).
 /voyageurs/livret/media/*  https://titelive.me/livret/media/:splat  200!
