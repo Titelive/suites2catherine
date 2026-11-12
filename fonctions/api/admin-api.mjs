@@ -1,7 +1,6 @@
 // Espace d'édition de Catherine : POST /admin/api  (Basic auth, mêmes identifiants que le livret)
 //   connexion | lire | enregistrer | original | historique | restaurer | photo | apercu
 // Le mot de passe est vérifié par l'administration du livret (titelive.me), seul endroit où il est défini.
-import { purgeCache } from "@netlify/functions";
 import { randomBytes, createHash } from "node:crypto";
 import { store, medias, original, contenuActuel } from "./_lib/contenu.mjs";
 import { renderPage, LANGS, ICON_NAMES, ICONS } from "./_lib/rendu.mjs";
@@ -31,7 +30,6 @@ function valide(c) {
   if (JSON.stringify(c).length > 400000) return "Contenu trop long.";
   return "";
 }
-const purge = async () => { try { await purgeCache({ tags: ["pages"] }); } catch (e) { console.log("purge", e && e.message); } };
 
 export default async (req) => {
   if (req.method !== "POST") return J(405, { error: "Méthode non autorisée." });
@@ -63,7 +61,6 @@ export default async (req) => {
       for (const k of keys.slice(0, Math.max(0, keys.length - 30))) await S.delete(k);
     }
     await S.setJSON("contenu", c);
-    await purge();
     return J(200, { ok: true });
   }
 
@@ -71,7 +68,6 @@ export default async (req) => {
     const prev = await S.get("contenu", { type: "json" }).catch(() => null);
     if (prev) await S.setJSON("historique/h-" + Date.now(), prev);
     await S.delete("contenu");
-    await purge();
     return J(200, { ok: true, contenu: original() });
   }
 

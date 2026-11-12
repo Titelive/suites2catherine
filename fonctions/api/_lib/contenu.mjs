@@ -1,5 +1,5 @@
-// Contenu du site : la version enregistrée par Catherine (Netlify Blobs), sinon contenu.json du dépôt.
-import { getStore } from "@netlify/blobs";
+// Contenu du site : la version enregistrée par Catherine (stockage du serveur), sinon contenu.json du dépôt.
+import { getStore } from "stockage";
 import ORIGINAL from "../../../contenu.json";
 
 export const store = () => getStore({ name: "site", consistency: "strong" });
