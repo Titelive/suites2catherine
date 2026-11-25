@@ -3,6 +3,8 @@
 export const SITE = "https://suites2catherine.com";
 export const LANGS = ["fr", "en", "de", "nl"];
 export const VERSION = "26";
+/* version des cartes de partage img/partage/xx.jpg : à changer quand on les regénère (les réseaux gardent l'ancienne en cache) */
+export const OG_V = "1";
 export const ICONS = {
 "grid": "<rect x=\"3\" y=\"3\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\" rx=\"1.5\"/>",
 "pin": "<path d=\"M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z\"/><circle cx=\"12\" cy=\"9.5\" r=\"2.5\"/>",
@@ -69,8 +71,12 @@ const telHref = (t) => String(t || "").replace(/[^\d+]/g, "");
 
 export function renderPage(C, L, opts = {}) {
   const I = C.interface || {}, S = C.suites || [], seo = C.seo || {};
-  const stitle = tr(seo.titre, L), sdesc = plain(tr(seo.description, L)), ogalt = tr(seo.imageAlt, L);
-  const ogimg = abs(seo.image || "/img/og.jpg");
+  const stitle = tr(seo.titre, L), sdesc = plain(tr(seo.description, L));
+  /* aperçu de partage : la carte de la langue (img/partage/), sauf si une autre image a été choisie dans l'espace d'édition */
+  const own = seo.image && seo.image !== "/img/og.jpg";
+  const ogimg = own ? abs(seo.image) : `${SITE}/img/partage/${L}.jpg?v=${OG_V}`;
+  const ogalt = own ? tr(seo.imageAlt, L) : `Les Suites de Catherine : ${plain(tr((C.accueil || {}).titre, L))}. suites2catherine.com`;
+  const ogtype = /\.png(\?|$)/i.test(ogimg) ? "image/png" : /\.webp(\?|$)/i.test(ogimg) ? "image/webp" : "image/jpeg";
   const resa = (safeUrl((C.liens || {}).reservation) || "https://www.les-suites-de-catherine.fr").replace(/\/+$/, "");
   const resaHost = resa.replace(/^https?:\/\/(www\.)?/, "");
   const book = `${resa}/${L}/booking/room`;
@@ -162,7 +168,8 @@ ${alts}
 <meta property="og:locale" content="${LOCALE[L]}">
 ${LANGS.filter((x) => x !== L).map((x) => `<meta property="og:locale:alternate" content="${LOCALE[x]}">`).join("")}
 <meta property="og:image" content="${e(ogimg)}">
-<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:secure_url" content="${e(ogimg)}">
+<meta property="og:image:type" content="${ogtype}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="${e(ogalt)}">
@@ -173,6 +180,7 @@ ${LANGS.filter((x) => x !== L).map((x) => `<meta property="og:locale:alternate" 
 <meta name="twitter:image:alt" content="${e(ogalt)}">
 <meta name="geo.region" content="FR-54"><meta name="geo.placename" content="Nancy">
 <meta name="theme-color" content="#ffffff">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
